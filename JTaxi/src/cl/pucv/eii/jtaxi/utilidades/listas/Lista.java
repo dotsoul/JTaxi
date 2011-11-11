@@ -78,5 +78,11 @@ public interface Lista<K> {
 	 * @return el índice de la primera entrada de item en la lista o -1 si item
 	 */
 	public int getPos(K item);
+	
+	/**
+	 * Retorna el numero de items en la lista.
+	 * @return un int con la cantidad de items en la lista.
+	 */
+	public int tamaño();
 
 }
