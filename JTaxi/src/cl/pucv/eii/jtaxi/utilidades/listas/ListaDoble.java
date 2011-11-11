@@ -20,57 +20,184 @@
 package cl.pucv.eii.jtaxi.utilidades.listas;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class ListaDoble<K> implements Lista<K>, Iterable<K> {
-	
-	private NodoDoble<K> cabeza;
-	private NodoDoble<K> cola;
+
+	private NodoDoble<K> head;
+	private NodoDoble<K> tail;
 	private int tamaño = 0;
+
+	protected NodoDoble<K> getHead() {
+		return head;
+	}
+
+	protected NodoDoble<K> getTail() {
+		return tail;
+	}
 
 	@Override
 	public Iterator<K> iterator() {
-		return null;
+		return listIterator();
+	}
+
+	public ListIterator<K> listIterator() {
+		return new IteradorDoble<K>(this);
 	}
 
 	@Override
 	public void agregar(K item) {
-		
+		NodoDoble<K> nuevo = new NodoDoble<>(item);
+		if (head == null) {
+			head = nuevo;
+			tail = head;
+		} else {
+			tail.setSiguiente(nuevo);
+			nuevo.setAnterior(tail);
+			tail = nuevo;
+		}
 		tamaño++;
 	}
 
 	@Override
 	public void agregar(int indice, K item) {
-		// TODO Auto-generated method stub
+		if(indice < 0 || indice >= tamaño())
+			throw new IndexOutOfBoundsException();
 		
+		if(indice == 0){
+			agregarAlInicio(item);
+		} else if(indice == tamaño()-1) {
+			agregar(item);
+		} else {
+			NodoDoble<K> prev = getNodo(indice-1);
+			NodoDoble<K> nuevo = new NodoDoble<>(item,prev,prev.getSiguiente());
+			prev.getSiguiente().setAnterior(nuevo);
+			prev.setSiguiente(nuevo);			
+		}
+		
+		tamaño++;
 	}
 
 	@Override
 	public void agregarAlInicio(K item) {
-		// TODO Auto-generated method stub
-		
+		NodoDoble<K> nuevo = new NodoDoble<>(item);
+		if (estaVacia()) {
+			head = nuevo;
+			tail = head;
+		} else {
+			head.setAnterior(nuevo);
+			nuevo.setSiguiente(head);
+			head = nuevo;
+		}
+		tamaño++;
 	}
 
 	@Override
 	public boolean eliminar(K item) {
-		// TODO Auto-generated method stub
-		return false;
+		if (estaVacia())
+			return false;
+
+		NodoDoble<K> nodo = getNodo(item);
+
+		return (nodo == null) ? false : remover(nodo);
 	}
 
 	@Override
 	public K eliminar(int indice) {
-		// TODO Auto-generated method stub
-		return null;
+		if(indice < 0 || indice >= tamaño)
+			throw new IndexOutOfBoundsException();
+		
+		NodoDoble<K> nodo = getNodo(indice);
+		remover(nodo);
+		return nodo.getItem();
 	}
 
 	@Override
 	public int getPos(K item) {
-		// TODO Auto-generated method stub
-		return 0;
+		for (ListIterator<K> itr = listIterator(); itr.hasNext();) {
+			if (itr.next() == item) {
+				return itr.previousIndex();
+			}
+		}
+		return -1;
+	}
+
+	@Override
+	public K getObject(int pos) {
+		if (pos < 0 || pos >= tamaño())
+			throw new IndexOutOfBoundsException();
+
+		for (ListIterator<K> itr = listIterator(); itr.hasNext();) {
+			if (itr.nextIndex() == pos)
+				return itr.next();
+			itr.next();
+		}
+
+		return null;
+	}
+
+	@Override
+	public int tamaño() {
+		return this.tamaño;
+	}
+
+	@Override
+	public boolean estaVacia() {
+		return (tamaño == 0);
+	}
+
+	private boolean remover(NodoDoble<K> nodo) {
+		if (nodo == null)
+			throw new IllegalArgumentException("Nodo no puede ser nulo.");
+
+		NodoDoble<K> anterior = nodo.getAnterior();
+		NodoDoble<K> siguiente = nodo.getSiguiente();
+
+		/* Si el nodo es el primero, se cambia el head. */
+		if (nodo == head) {
+			head = siguiente;
+		} else {
+			anterior.setSiguiente(siguiente);
+			nodo.setAnterior(null);
+		}
+		
+		if (nodo == tail){
+			tail = anterior;
+		} else {
+			siguiente.setAnterior(anterior);
+			nodo.setSiguiente(null);
+		}
+		
+		tamaño--;
+		return true;
+	}
+
+	private NodoDoble<K> getNodo(K item) {
+		if (item == null)
+			throw new IllegalArgumentException("Item no puede ser nulo.");
+
+		NodoDoble<K> nodo = head;
+		while (nodo != null) {
+			if (nodo.getItem() == item)
+				return nodo;
+			else
+				nodo = nodo.getSiguiente();
+		}
+		return null;
 	}
 	
-	@Override
-	public int tamaño(){
-		return this.tamaño;
+	private NodoDoble<K> getNodo(int indice){
+		if (indice < 0 || indice >= tamaño)
+			throw new IndexOutOfBoundsException();
+		
+		NodoDoble<K> nodo = head;
+		for(int i = 0;i<tamaño;i++){
+			if(i == indice){
+				return nodo;
+			}
+			 nodo = nodo.getSiguiente();
+		}
+		return nodo;
 	}
 
 }

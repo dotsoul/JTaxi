@@ -78,11 +78,30 @@ public interface Lista<K> {
 	 * @return el índice de la primera entrada de item en la lista o -1 si item
 	 */
 	public int getPos(K item);
-	
+
+	/**
+	 * Retorna el objeto almacenado en el indice i.
+	 * 
+	 * 
+	 * @param indice
+	 *            posicion del objeto
+	 * @return objeto almacenado en la posicion i
+	 * 
+	 */
+	public K getObject(int i);
+
 	/**
 	 * Retorna el numero de items en la lista.
+	 * 
 	 * @return un int con la cantidad de items en la lista.
 	 */
 	public int tamaño();
+
+	/**
+	 * Devuelve true si la lista no tiene elementos.
+	 * 
+	 * @return true si la lista no tiene elementos.
+	 */
+	public boolean estaVacia();
 
 }
