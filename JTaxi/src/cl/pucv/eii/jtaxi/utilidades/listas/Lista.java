@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, Rene Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio Jiménez, Renés Toro, José Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
