@@ -25,7 +25,7 @@ public class ListaCircular<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public void agregar(K item) {
-		System.out.println( "Test" );
+		// TODO lalal
 		
 	}
 
