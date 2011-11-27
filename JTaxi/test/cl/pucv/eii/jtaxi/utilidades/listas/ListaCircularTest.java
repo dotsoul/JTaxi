@@ -91,6 +91,7 @@ public class ListaCircularTest {
 		assertTrue(obtenerListaVacia().iterator() instanceof Iterator);
 	}
 	
+	@SuppressWarnings("unused")
 	private ListaCircular<Object> obtenerListaConVarios() {
 		ListaCircular<Object> lista = new ListaCircular<>();
 		for (int i = 0; i < 10; i++)
@@ -102,6 +103,7 @@ public class ListaCircularTest {
 		return new ListaCircular<Object>();
 	}
 
+	@SuppressWarnings("unused")
 	private ListaCircular<Object> obtenerListaConUnDato() {
 		ListaCircular<Object> lista = new ListaCircular<>();
 		lista.agregar(new Object());

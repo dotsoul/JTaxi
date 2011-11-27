@@ -21,8 +21,9 @@ package cl.pucv.eii.jtaxi.utilidades.listas;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 
+import org.junit.Test;
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ListaDobleTest {
 
 	@Test
