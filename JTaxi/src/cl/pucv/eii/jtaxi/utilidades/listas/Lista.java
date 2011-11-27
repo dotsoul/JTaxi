@@ -54,10 +54,11 @@ public interface Lista<K> {
 
 	/**
 	 * Elimina la primera entrada de item de la lista.
-	 * 
+	 * Devuelve false si item es null.
 	 * @param item
 	 *            objeto a eliminar
-	 * @return true si el objeto se encontraba en la lista y fue eliminado
+	 * @return true si el objeto se encontraba en la lista y fue eliminado,
+	 *         false si no se encontraba o era null.
 	 */
 	public boolean eliminar(K item);
 

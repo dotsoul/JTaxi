@@ -94,7 +94,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public boolean eliminar(K item) {
-		if (estaVacia())
+		if (estaVacia() || item == null)
 			return false;
 
 		NodoDoble<K> nodo = getNodo(item);

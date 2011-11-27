@@ -69,6 +69,7 @@ public class ListaDobleTest {
 		lista.eliminar(item);
 		assertEquals(0, lista.getPos(aux));
 
+		assertTrue(!lista.eliminar(null));
 	}
 
 	@Test
