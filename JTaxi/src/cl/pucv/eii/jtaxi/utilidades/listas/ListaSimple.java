@@ -40,7 +40,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		return iteradorSimple();
 	}
 
-	public IteradorSimple<K> iteradorSimple() {
+	private IteradorSimple<K> iteradorSimple() {
 		return new IteradorSimple<K>(this);
 	}
 
