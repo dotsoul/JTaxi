@@ -19,14 +19,13 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
-public class RutInvalidoException extends Exception {
+public class CapacidadExcedidaException extends Exception {
+	private static final long serialVersionUID = 8648580181555755725L;
 
-	private static final long serialVersionUID = -7777711331481407974L;
-
-	public RutInvalidoException() {super();}
-
-	public RutInvalidoException(String arg0) {
-		super(arg0);
+	public CapacidadExcedidaException() {super();}
+	public CapacidadExcedidaException(String s) {
+		super(s);
 	}
+
 
 }
