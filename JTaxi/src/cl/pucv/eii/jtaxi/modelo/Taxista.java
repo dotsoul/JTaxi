@@ -22,36 +22,18 @@ package cl.pucv.eii.jtaxi.modelo;
 public class Taxista extends Persona {
 
     private int sueldo;
-    private Taxi taxi;
-    private Flota flota;
 
     public Taxista(String nombre, Rut rut, int sueldo){
         super(nombre, rut);
         this.sueldo = sueldo;
     }
-    
-    public Flota getFlota(){
-    	return flota;
-    }
-    
-    public void setFlota(Flota f){
-    	flota = f;
-    }
-
+   
     public int getSueldo() {
         return sueldo;
     }
 
     public void setSueldo(int sueldo) {
         this.sueldo = sueldo;
-    }
-
-    public Taxi getTaxi() {
-        return taxi;
-    }
-
-    public void setTaxi(Taxi taxi) {
-        this.taxi = taxi;
     }
 
 }
