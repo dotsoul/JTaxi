@@ -27,11 +27,11 @@ public class ListaCircularTest {
 	public static void main(String...asdf){
 		ListaCircular<Integer> li = new ListaCircular<>();
 		
-		for(int i = 0; i<1;i++)
+		for(int i = 0; i<10;i++)
 			li.agregar(i);
 		
 		int i = 0;
-		for(ListIterator<Integer> itr = li.listIterator();itr.hasNext()&&i<0;){
+		for(ListIterator<Integer> itr = li.listIterator();itr.hasNext()&&i<100;){
 			System.out.print(itr.nextIndex()+"||");
 			System.out.println(itr.next());
 			i++;
@@ -39,7 +39,7 @@ public class ListaCircularTest {
 		}
 		
 		i = 0;
-		for(ListIterator<Integer> itr = li.listIterator();itr.hasPrevious()&&i<100;){
+		for(ListIterator<Integer> itr = li.listIterator();itr.hasPrevious()&&i<0;){
 			System.out.print(itr.previousIndex()+"||");
 			System.out.println(itr.previous());
 			i++;
