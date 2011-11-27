@@ -35,23 +35,23 @@ public class ListaCircular<K> extends ListaDoble<K>{
 	
 	@Override
 	public ListIterator<K> listIterator() {
-		return new IteradorCircular<K>(this);
+		return new IteradorCircular(this);
 	}
 	//Para poder listar de principio a fin.
 	public ListIterator<K> iteradorDoble(){
-		return new IteradorDoble<K>(this);
+		return new IteradorDoble(this);
 	}
 
 	/*
 	 * IteradorDoble tuneado para lista circular.
 	 */
-	private class IteradorCircular<T> implements ListIterator<T>{
+	private class IteradorCircular implements ListIterator<K>{
 		private int indiceSiguiente;
-		private ListaCircular<T> lista;
-		private NodoDoble<T> siguiente;
-		private NodoDoble<T> ultimoRetornado = null;
+		private ListaCircular<K> lista;
+		private NodoDoble<K> siguiente;
+		private NodoDoble<K> ultimoRetornado = null;
 		
-		public IteradorCircular(ListaCircular<T> lista){
+		public IteradorCircular(ListaCircular<K> lista){
 			this.lista = lista;
 			siguiente = lista.getHead();
 			indiceSiguiente = 0;
@@ -68,7 +68,7 @@ public class ListaCircular<K> extends ListaDoble<K>{
 		}
 
 		@Override
-		public T next() {
+		public K next() {
 			if (!hasNext())
 				throw new NoSuchElementException();
 			
@@ -89,7 +89,7 @@ public class ListaCircular<K> extends ListaDoble<K>{
 		}
 
 		@Override
-		public T previous() {
+		public K previous() {
 			if (!hasPrevious())
 				throw new NoSuchElementException();
 			
@@ -111,10 +111,10 @@ public class ListaCircular<K> extends ListaDoble<K>{
 		public void remove() {}
 
 		@Override
-		public void set(T e) {}
+		public void set(K e) {}
 		
 		@Override
-		public void add(T e) {}
+		public void add(K e) {}
 		
 	}
 }

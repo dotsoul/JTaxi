@@ -43,7 +43,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	}
 
 	public ListIterator<K> listIterator() {
-		return new IteradorDoble<K>(this);
+		return new IteradorDoble(this);
 	}
 
 	@Override
@@ -204,13 +204,13 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	 * que utiliza la clase java.util.LinkedList
 	 * Implementada principalmente con fines de aprendizaje.
 	 */
-	protected class IteradorDoble<T> implements ListIterator<T>{
+	protected class IteradorDoble implements ListIterator<K>{
 		private int indiceSiguiente;
-		private ListaDoble<T> lista;
-		private NodoDoble<T> siguiente;
-		private NodoDoble<T> ultimoRetornado = null;
+		private ListaDoble<K> lista;
+		private NodoDoble<K> siguiente;
+		private NodoDoble<K> ultimoRetornado = null;
 		
-		public IteradorDoble(ListaDoble<T> lista){
+		public IteradorDoble(ListaDoble<K> lista){
 			this.lista = lista;
 			siguiente = lista.getHead();
 			indiceSiguiente = 0;
@@ -227,7 +227,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		}
 
 		@Override
-		public T next() {
+		public K next() {
 			if (!hasNext())
 				throw new NoSuchElementException();
 			ultimoRetornado = siguiente;
@@ -242,7 +242,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		}
 
 		@Override
-		public T previous() {
+		public K previous() {
 			if (!hasPrevious())
 				throw new NoSuchElementException();
 			/* Pucha que cuesta imaginarse los iteradores como pide la definición de la Interface
@@ -267,11 +267,53 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		public void remove() {}
 
 		@Override
-		public void set(T e) {}
+		public void set(K e) {}
 		
 		@Override
-		public void add(T e) {}
+		public void add(K e) {}
 		
 
 	}
+	
+	protected static class NodoDoble<K> {
+		private K item;
+		private NodoDoble<K> anterior;
+		private NodoDoble<K> siguiente;
+		
+		NodoDoble(K item){
+			this.item = item;
+			this.anterior = null;
+			this.siguiente = null;
+		}
+		
+		NodoDoble(K item, NodoDoble<K> anterior, NodoDoble<K> siguiente){
+			this.anterior = anterior;
+			this.siguiente = siguiente;
+			this.item = item;
+		}
+
+		NodoDoble<K> getAnterior() {
+			return anterior;
+		}
+
+		void setAnterior(NodoDoble<K> anterior) {
+			this.anterior = anterior;
+		}
+
+		NodoDoble<K> getSiguiente() {
+			return siguiente;
+		}
+
+		void setSiguiente(NodoDoble<K> siguiente) {
+			this.siguiente = siguiente;
+		}
+
+		K getItem() {
+			return item;
+		}
+		
+	}
+
+	
+	
 }

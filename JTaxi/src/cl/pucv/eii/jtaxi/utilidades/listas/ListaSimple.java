@@ -41,10 +41,6 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		return iteradorSimple();
 	}
 
-	private IteradorSimple<K> iteradorSimple() {
-		return new IteradorSimple<K>(this);
-	}
-
 	@Override
 	public void agregar(K item) {
 		NodoSimple<K> nuevo = new NodoSimple<>(item);
@@ -111,7 +107,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public int getIndice(K item) {
-		for (IteradorSimple<K> itr = iteradorSimple(); itr.hasNext();) {
+		for (IteradorSimple itr = iteradorSimple(); itr.hasNext();) {
 			if (itr.next().equals(item)) {
 				return itr.nextIndex() - 1;
 			}
@@ -124,7 +120,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		if (pos < 0 || pos >= tamaño())
 			throw new IndexOutOfBoundsException();
 
-		for (IteradorSimple<K> itr = iteradorSimple(); itr.hasNext();) {
+		for (IteradorSimple itr = iteradorSimple(); itr.hasNext();) {
 			if (itr.nextIndex() == pos)
 				return itr.next();
 			itr.next();
@@ -201,13 +197,13 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	 * Iterator que utiliza la clase java.util.LinkedList Implementada
 	 * principalmente con fines de aprendizaje.
 	 */
-	private class IteradorSimple<T> implements Iterator<T> {
+	private class IteradorSimple implements Iterator<K> {
 		private int indiceSiguiente;
-		private ListaSimple<T> lista;
-		private NodoSimple<T> siguiente;
-		private NodoSimple<T> ultimoRetornado = null;
+		private ListaSimple<K> lista;
+		private NodoSimple<K> siguiente;
+		private NodoSimple<K> ultimoRetornado = null;
 
-		public IteradorSimple(ListaSimple<T> lista) {
+		public IteradorSimple(ListaSimple<K> lista) {
 			this.lista = lista;
 			siguiente = lista.getHead();
 			indiceSiguiente = 0;
@@ -219,7 +215,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		}
 
 		@Override
-		public T next() {
+		public K next() {
 			if (!hasNext())
 				throw new NoSuchElementException();
 			ultimoRetornado = siguiente;
@@ -237,5 +233,36 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		}
 
 	}
+	
+	private static class NodoSimple<K> {
+		private K item;
+		private NodoSimple<K> siguiente;
+		
+		NodoSimple(K item){
+			this.item = item;
+			this.siguiente = null;
+		}
+		
+		NodoSimple(K item, NodoSimple<K> siguiente){
+			this.siguiente = siguiente;
+			this.item = item;
+		}
 
+		NodoSimple<K> getSiguiente() {
+			return siguiente;
+		}
+
+		void setSiguiente(NodoSimple<K> siguiente) {
+			this.siguiente = siguiente;
+		}
+
+		K getItem() {
+			return item;
+		}
+
+	}
+	
+	private IteradorSimple iteradorSimple() {
+		return new IteradorSimple(this);
+	}
 }
