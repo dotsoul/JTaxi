@@ -21,6 +21,7 @@ package cl.pucv.eii.jtaxi.utilidades.listas;
 
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
@@ -198,4 +199,79 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		return nodo;
 	}
 
+	/*
+	 * Implementación de la interface ListIterator, fuértemente influenciada por el Iterator
+	 * que utiliza la clase java.util.LinkedList
+	 * Implementada principalmente con fines de aprendizaje.
+	 */
+	private class IteradorDoble<T> implements ListIterator<T>{
+		private int indiceSiguiente;
+		private ListaDoble<T> lista;
+		private NodoDoble<T> siguiente;
+		private NodoDoble<T> ultimoRetornado = null;
+		
+		public IteradorDoble(ListaDoble<T> lista){
+			this.lista = lista;
+			siguiente = lista.getHead();
+			indiceSiguiente = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return ( indiceSiguiente < lista.tamaño() );
+		}
+
+		@Override
+		public boolean hasPrevious() {
+			return ( indiceSiguiente > 0 );
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext())
+				throw new NoSuchElementException();
+			ultimoRetornado = siguiente;
+			siguiente = siguiente.getSiguiente();
+			indiceSiguiente++;
+			return ultimoRetornado.getItem();
+		}
+
+		@Override
+		public int nextIndex() {
+			return indiceSiguiente;
+		}
+
+		@Override
+		public T previous() {
+			if (!hasPrevious())
+				throw new NoSuchElementException();
+			/* Pucha que cuesta imaginarse los iteradores como pide la definición de la Interface
+			 * (como un cursor que se encuentra entre dos elementos).
+			 * La siguiente linea esta copiada de la implementacion de java.util.LinkedList, pero la
+			 * entiendo. Como el iterador esta entre los nodos, existe el caso en que el iterador
+			 * se encuentre pasado a la lista, en ese caso siguiente seria null y por lo tanto
+			 * lo que corresponde devolver es el tail de la lista, si siguiente no es null, y estamos
+			 * entre dos nodos no nulos, basta pedirle a siguiente la referencia al anterior.
+			 * -- Julio */
+			ultimoRetornado = siguiente = (siguiente == null) ? lista.getTail() : siguiente.getAnterior();
+			indiceSiguiente--;
+			return ultimoRetornado.getItem();
+		}
+
+		@Override
+		public int previousIndex() {
+			return indiceSiguiente-1;
+		}
+
+		@Override
+		public void remove() {}
+
+		@Override
+		public void set(T e) {}
+		
+		@Override
+		public void add(T e) {}
+		
+
+	}
 }
