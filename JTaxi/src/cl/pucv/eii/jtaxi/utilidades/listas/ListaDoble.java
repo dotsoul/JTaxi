@@ -204,7 +204,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	 * que utiliza la clase java.util.LinkedList
 	 * Implementada principalmente con fines de aprendizaje.
 	 */
-	private class IteradorDoble<T> implements ListIterator<T>{
+	protected class IteradorDoble<T> implements ListIterator<T>{
 		private int indiceSiguiente;
 		private ListaDoble<T> lista;
 		private NodoDoble<T> siguiente;
