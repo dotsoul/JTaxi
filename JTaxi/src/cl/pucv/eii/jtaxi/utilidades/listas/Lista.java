@@ -72,13 +72,13 @@ public interface Lista<K> {
 	public K eliminar(int indice);
 
 	/**
-	 * Retorna la posición de la primera entrada de item en la lista
+	 * Retorna el índice de la primera entrada de item en la lista
 	 * 
 	 * @param item
 	 *            objeto a buscar
 	 * @return el índice de la primera entrada de item en la lista o -1 si item
 	 */
-	public int getPos(K item);
+	public int getIndice(K item);
 
 	/**
 	 * Retorna el objeto almacenado en el indice i.

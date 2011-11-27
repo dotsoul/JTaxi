@@ -66,8 +66,6 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		
 		if(indice == 0){
 			agregarAlInicio(item);
-		} else if(indice == tamaño()-1) {
-			agregar(item);
 		} else {
 			NodoDoble<K> prev = getNodo(indice-1);
 			NodoDoble<K> nuevo = new NodoDoble<>(item,prev,prev.getSiguiente());
@@ -113,9 +111,9 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	}
 
 	@Override
-	public int getPos(K item) {
+	public int getIndice(K item) {
 		for (ListIterator<K> itr = listIterator(); itr.hasNext();) {
-			if (itr.next() == item) {
+			if (((K)itr.next()).equals(item)) {
 				return itr.previousIndex();
 			}
 		}
@@ -178,7 +176,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 		NodoDoble<K> nodo = head;
 		while (nodo != null) {
-			if (nodo.getItem() == item)
+			if (nodo.getItem().equals(item))
 				return nodo;
 			else
 				nodo = nodo.getSiguiente();

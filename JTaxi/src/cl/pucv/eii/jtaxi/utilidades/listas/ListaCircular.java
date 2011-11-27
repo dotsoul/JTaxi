@@ -54,7 +54,7 @@ public class ListaCircular<K> implements Lista<K>, Iterable<K> {
 	}
 
 	@Override
-	public int getPos(K item) {
+	public int getIndice(K item) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

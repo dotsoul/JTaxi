@@ -23,64 +23,175 @@ import java.util.Iterator;
 
 public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
+	private NodoSimple<K> head;
+	private NodoSimple<K> tail;
+	private int tamaño = 0;
+
+	protected NodoSimple<K> getHead() {
+		return head;
+	}
+
+	protected NodoSimple<K> getTail() {
+		return tail;
+	}
+
 	@Override
 	public Iterator<K> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return iteradorSimple();
+	}
+
+	public IteradorSimple<K> iteradorSimple() {
+		return new IteradorSimple<K>(this);
 	}
 
 	@Override
 	public void agregar(K item) {
-		// TODO Auto-generated method stub
-		
+		NodoSimple<K> nuevo = new NodoSimple<>(item);
+		if (head == null) {
+			head = nuevo;
+			tail = head;
+		} else {
+			tail.setSiguiente(nuevo);
+			tail = nuevo;
+		}
+		tamaño++;
 	}
 
 	@Override
 	public void agregar(int indice, K item) {
-		// TODO Auto-generated method stub
-		
+		if (indice < 0 || indice >= tamaño())
+			throw new IndexOutOfBoundsException();
+
+		if (indice == 0) {
+			agregarAlInicio(item);
+		} else {
+			NodoSimple<K> prev = getNodoAnterior(indice);
+			NodoSimple<K> nuevo = new NodoSimple<>(item, prev.getSiguiente());
+			prev.setSiguiente(nuevo);
+		}
+
+		tamaño++;
 	}
 
 	@Override
 	public void agregarAlInicio(K item) {
-		// TODO Auto-generated method stub
-		
+		NodoSimple<K> nuevo = new NodoSimple<>(item);
+		if (estaVacia()) {
+			head = nuevo;
+			tail = head;
+		} else {
+			nuevo.setSiguiente(head);
+			head = nuevo;
+		}
+		tamaño++;
 	}
 
 	@Override
 	public boolean eliminar(K item) {
-		// TODO Auto-generated method stub
-		return false;
+		if (estaVacia() || item == null)
+			return false;
+		
+		NodoSimple<K> nodoAnterior = getNodoAnterior(item);
+		
+		boolean esHead = item.equals(head.getItem());
+		
+		removerSiguiente(nodoAnterior);
+
+		return (nodoAnterior != null || esHead);
 	}
 
 	@Override
 	public K eliminar(int indice) {
-		// TODO Auto-generated method stub
-		return null;
+		if (indice < 0 || indice >= tamaño)
+			throw new IndexOutOfBoundsException();
+
+		return removerSiguiente(getNodoAnterior(indice));
 	}
 
 	@Override
-	public int getPos(K item) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getIndice(K item) {
+		for (IteradorSimple<K> itr = iteradorSimple(); itr.hasNext();) {
+			if (itr.next().equals(item)) {
+				return itr.nextIndex() - 1;
+			}
+		}
+		return -1;
 	}
 
 	@Override
-	public K getObject(int i) {
-		// TODO Auto-generated method stub
+	public K getObject(int pos) {
+		if (pos < 0 || pos >= tamaño())
+			throw new IndexOutOfBoundsException();
+
+		for (IteradorSimple<K> itr = iteradorSimple(); itr.hasNext();) {
+			if (itr.nextIndex() == pos)
+				return itr.next();
+			itr.next();
+		}
+
 		return null;
 	}
 
 	@Override
 	public int tamaño() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.tamaño;
 	}
 
 	@Override
 	public boolean estaVacia() {
-		// TODO Auto-generated method stub
-		return false;
+		return (tamaño == 0);
 	}
 
+	private K removerSiguiente(NodoSimple<K> nodo) {
+		NodoSimple<K> aRemover = (nodo == null) ? head : nodo.getSiguiente();
+		NodoSimple<K> siguiente = aRemover.getSiguiente();
+		
+		if (aRemover == head) {
+			head = siguiente;
+		} else {
+			nodo.setSiguiente(siguiente);
+		}
+		
+		if(aRemover == tail){
+			tail = nodo;
+		}
+
+		aRemover.setSiguiente(null);
+		tamaño--;
+		return aRemover.getItem();
+	}
+
+	private NodoSimple<K> getNodoAnterior(K item) {
+		if (item == null)
+			throw new IllegalArgumentException("Item no puede ser nulo.");
+
+		if (item.equals(head))
+			return null;
+
+		NodoSimple<K> nodo = head;
+		while (nodo.getSiguiente() != null) {
+			if (nodo.getSiguiente().equals(item))
+				return nodo;
+			else
+				nodo = nodo.getSiguiente();
+		}
+		return null;
+	}
+
+	private NodoSimple<K> getNodoAnterior(int indice) {
+		if (indice < 0 || indice >= tamaño)
+			throw new IndexOutOfBoundsException();
+
+		if (indice == 0)
+			return null;
+
+		NodoSimple<K> nodo = head;
+		for (int i = 0; i < tamaño; i++) {
+			if (i == indice - 1) {
+				return nodo;
+			}
+			nodo = nodo.getSiguiente();
+		}
+		return nodo;
+	}
 }
