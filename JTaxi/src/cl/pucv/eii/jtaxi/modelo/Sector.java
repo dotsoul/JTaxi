@@ -19,6 +19,7 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
+import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 /**
@@ -40,12 +41,10 @@ public class Sector {
 		return nombre;
 	}
 
-	public ListaDoble<Paradero> listarParaderos() {
-		ListaDoble<Paradero> aux = new ListaDoble<>();
+	public void listarParaderos(Lista<Paradero> lista) {
 		for (Paradero p: paraderos){
-			aux.agregar(p);
+			lista.agregar(p);
 		}
-		return aux;
 	}
 
 	public boolean agregarParadero(Paradero p) {
