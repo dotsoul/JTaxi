@@ -20,6 +20,7 @@
 package cl.pucv.eii.jtaxi.utilidades.listas;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
@@ -90,11 +91,11 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	public boolean eliminar(K item) {
 		if (estaVacia() || item == null)
 			return false;
-		
+
 		NodoSimple<K> nodoAnterior = getNodoAnterior(item);
-		
+
 		boolean esHead = item.equals(head.getItem());
-		
+
 		removerSiguiente(nodoAnterior);
 
 		return (nodoAnterior != null || esHead);
@@ -145,14 +146,14 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	private K removerSiguiente(NodoSimple<K> nodo) {
 		NodoSimple<K> aRemover = (nodo == null) ? head : nodo.getSiguiente();
 		NodoSimple<K> siguiente = aRemover.getSiguiente();
-		
+
 		if (aRemover == head) {
 			head = siguiente;
 		} else {
 			nodo.setSiguiente(siguiente);
 		}
-		
-		if(aRemover == tail){
+
+		if (aRemover == tail) {
 			tail = nodo;
 		}
 
@@ -194,4 +195,47 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		}
 		return nodo;
 	}
+
+	/*
+	 * Implementación de la interface Iterator, fuértemente influenciada por el
+	 * Iterator que utiliza la clase java.util.LinkedList Implementada
+	 * principalmente con fines de aprendizaje.
+	 */
+	private class IteradorSimple<T> implements Iterator<T> {
+		private int indiceSiguiente;
+		private ListaSimple<T> lista;
+		private NodoSimple<T> siguiente;
+		private NodoSimple<T> ultimoRetornado = null;
+
+		public IteradorSimple(ListaSimple<T> lista) {
+			this.lista = lista;
+			siguiente = lista.getHead();
+			indiceSiguiente = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return (indiceSiguiente < lista.tamaño());
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext())
+				throw new NoSuchElementException();
+			ultimoRetornado = siguiente;
+			siguiente = siguiente.getSiguiente();
+			indiceSiguiente++;
+			return ultimoRetornado.getItem();
+		}
+
+		public int nextIndex() {
+			return indiceSiguiente;
+		}
+
+		@Override
+		public void remove() {
+		}
+
+	}
+
 }
