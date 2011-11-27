@@ -17,23 +17,33 @@
  * You should have received a copy of the GNU General Public License
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cl.pucv.eii.jtaxi.modelo;
+package cl.pucv.eii.jtaxi.nounitarias;
 
-public class Taxista extends Persona {
+import java.util.ListIterator;
 
-    private int sueldo;
+import cl.pucv.eii.jtaxi.utilidades.listas.ListaCircular;
 
-    public Taxista(String nombre, Rut rut, int sueldo){
-        super(nombre, rut);
-        this.sueldo = sueldo;
-    }
-   
-    public int getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(int sueldo) {
-        this.sueldo = sueldo;
-    }
-
+public class ListaCircularTest {
+	public static void main(String...asdf){
+		ListaCircular<Integer> li = new ListaCircular<>();
+		
+		for(int i = 0; i<1;i++)
+			li.agregar(i);
+		
+		int i = 0;
+		for(ListIterator<Integer> itr = li.listIterator();itr.hasNext()&&i<0;){
+			System.out.print(itr.nextIndex()+"||");
+			System.out.println(itr.next());
+			i++;
+			
+		}
+		
+		i = 0;
+		for(ListIterator<Integer> itr = li.listIterator();itr.hasPrevious()&&i<100;){
+			System.out.print(itr.previousIndex()+"||");
+			System.out.println(itr.previous());
+			i++;
+			
+		}
+	}
 }

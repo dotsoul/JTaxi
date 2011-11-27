@@ -19,21 +19,13 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
-public class Taxista extends Persona {
+public class CapacidadExcedidaException extends Exception {
+	private static final long serialVersionUID = 8648580181555755725L;
 
-    private int sueldo;
+	public CapacidadExcedidaException() {super();}
+	public CapacidadExcedidaException(String s) {
+		super(s);
+	}
 
-    public Taxista(String nombre, Rut rut, int sueldo){
-        super(nombre, rut);
-        this.sueldo = sueldo;
-    }
-   
-    public int getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(int sueldo) {
-        this.sueldo = sueldo;
-    }
 
 }

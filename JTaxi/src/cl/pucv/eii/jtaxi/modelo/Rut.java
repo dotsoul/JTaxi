@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * La clase Rut representa al Rol único tributario utilizado para identificar personas en Chile.
  * 
- * @author Julio
+ * @TODO Implementar patrón Strategy en toString() y fromString()
  *
  */
 public class Rut {

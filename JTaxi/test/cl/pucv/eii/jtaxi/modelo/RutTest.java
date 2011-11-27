@@ -73,6 +73,7 @@ public class RutTest {
 		assertEquals("19.678.162-5",rut3.toString());
 		assertEquals("21.979.391-K" ,rut4.toString());
 		assertEquals("17.422.240-1", rut2.toString());
+		assertTrue("21.979.391-k".equalsIgnoreCase(rut4.toString()));
 	}
 	
 	@Test
