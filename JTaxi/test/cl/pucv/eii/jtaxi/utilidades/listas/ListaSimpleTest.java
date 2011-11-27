@@ -24,11 +24,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ListaDobleTest {
+public class ListaSimpleTest {
 
 	@Test
 	public void testAgregarK() {
-		ListaDoble lista = new ListaDoble();
+		ListaSimple lista = new ListaSimple();
 		Object k = new Object();
 		lista.agregar(k);
 		assertEquals(1, lista.tamaño());
@@ -36,7 +36,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testAgregarIntK() {
-		ListaDoble lista = new ListaDoble();
+		ListaSimple lista = new ListaSimple();
 		Object k = new Object();
 		for (int i = 0; i < 5; i++)
 			lista.agregar(new Object());
@@ -54,7 +54,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testAgregarAlInicio() {
-		ListaDoble<Object> lista = obtenerListaConVarios();
+		ListaSimple<Object> lista = obtenerListaConVarios();
 		Object item = new Object();
 		lista.agregarAlInicio(item);
 		assertEquals(0, lista.getIndice(item));
@@ -62,7 +62,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testEliminarK() {
-		ListaDoble<Object> lista = obtenerListaVacia();
+		ListaSimple<Object> lista = obtenerListaVacia();
 		Object item = new Object();
 		assertTrue(!lista.eliminar(item));
 		lista.agregar(item);
@@ -82,7 +82,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testEliminarInt() {
-		ListaDoble<Object> lista = obtenerListaVacia();
+		ListaSimple<Object> lista = obtenerListaVacia();
 		Object item = new Object();
 
 		boolean flag = true;
@@ -100,7 +100,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testGetPos() {
-		ListaDoble<Object> lista = obtenerListaConVarios();
+		ListaSimple<Object> lista = obtenerListaConVarios();
 		Object k = new Object();
 		lista.agregar(k);
 		assertEquals(10, lista.getIndice(k));
@@ -118,7 +118,7 @@ public class ListaDobleTest {
 
 	@Test
 	public void testGetObject() {
-		ListaDoble<Object> lista = obtenerListaVacia();
+		ListaSimple<Object> lista = obtenerListaVacia();
 		Object i = new Object();
 		boolean flag = true;
 		try {
@@ -129,16 +129,17 @@ public class ListaDobleTest {
 		}
 
 		lista.agregar(i);
+		lista.agregar("asdf");
+		lista.agregar("asdf2");
+		lista.agregar("asd1f");
 		assertTrue(lista.getObject(0) == i);
 		assertEquals(0, lista.getIndice(lista.getObject(0)));
-		ListaDoble<String> liS = new ListaDoble<String>();
-		liS.agregar("hola");
-		assertEquals(0,liS.getIndice("hola"));
+		assertTrue(lista.getObject(2).equals("asdf2"));
 	}
 
 	@Test
 	public void testTamaño() {
-		ListaDoble lista = new ListaDoble();
+		ListaSimple lista = new ListaSimple();
 		for (int i = 0; i < 3; i++)
 			lista.agregar(new Object());
 		assertEquals(3, lista.tamaño());
@@ -146,23 +147,25 @@ public class ListaDobleTest {
 
 	@Test
 	public void testEstaVacia() {
-		ListaDoble lista = new ListaDoble();
+		ListaSimple lista = new ListaSimple();
 		assertTrue(lista.estaVacia());
+		lista.agregar("");
+		assertTrue(!lista.estaVacia());
 	}
 
-	private ListaDoble<Object> obtenerListaConVarios() {
-		ListaDoble<Object> lista = new ListaDoble<>();
+	private ListaSimple<Object> obtenerListaConVarios() {
+		ListaSimple<Object> lista = new ListaSimple<>();
 		for (int i = 0; i < 10; i++)
 			lista.agregar(new Object());
 		return lista;
 	}
 
-	private ListaDoble<Object> obtenerListaVacia() {
-		return new ListaDoble<Object>();
+	private ListaSimple<Object> obtenerListaVacia() {
+		return new ListaSimple<Object>();
 	}
 
-	private ListaDoble<Object> obtenerListaConUnDato() {
-		ListaDoble<Object> lista = new ListaDoble<>();
+	private ListaSimple<Object> obtenerListaConUnDato() {
+		ListaSimple<Object> lista = new ListaSimple<>();
 		lista.agregar(new Object());
 		return lista;
 	}
