@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -31,7 +31,7 @@ public class ListaDobleTest {
 		ListaDoble lista = new ListaDoble();
 		Object k = new Object();
 		lista.agregar(k);
-		assertEquals(1, lista.tamaño());
+		assertEquals(1, lista.tamaÃ±o());
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class ListaDobleTest {
 		Object k = new Object();
 		for (int i = 0; i < 5; i++)
 			lista.agregar(new Object());
-		assertEquals(5, lista.tamaño());
+		assertEquals(5, lista.tamaÃ±o());
 		lista.agregar(4, k);
 		assertEquals(4, lista.getIndice(k));
 		lista.eliminar(4);
@@ -67,7 +67,7 @@ public class ListaDobleTest {
 		assertTrue(!lista.eliminar(item));
 		lista.agregar(item);
 		assertTrue(lista.eliminar(item));
-		assertEquals(0, lista.tamaño());
+		assertEquals(0, lista.tamaÃ±o());
 
 		lista = obtenerListaConUnDato();
 		Object item2 = new Object();
@@ -137,11 +137,11 @@ public class ListaDobleTest {
 	}
 
 	@Test
-	public void testTamaño() {
+	public void testTamaÃ±o() {
 		ListaDoble lista = new ListaDoble();
 		for (int i = 0; i < 3; i++)
 			lista.agregar(new Object());
-		assertEquals(3, lista.tamaño());
+		assertEquals(3, lista.tamaÃ±o());
 	}
 
 	@Test

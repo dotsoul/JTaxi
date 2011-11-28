@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -23,8 +23,8 @@ import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 /**
- * La clase Sector representa un cierto área dentro de una ciudad.
- * @author René, José
+ * La clase Sector representa una cierta Ã¡rea dentro de una ciudad.
+ * @author RenÃ©, JosÃ©
  *
  */
 public class Sector {

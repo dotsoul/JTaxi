@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio JimÈnez, Rene Toro, JosÈ Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio Jim√©nez, Ren√© Toro, Jos√© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -33,7 +33,7 @@ public class DvEsValido {
 		String[] randomicos_f = getRandomChars(5000000);
 		long[][] resultados = new long[7][4];
 		String[] randomicos = null;
-		for (int i = 1; i < 7; i++) {
+		for (int i = 6; i < 7; i++) {
 			int n = f*(int)Math.pow(10, i);
 			System.out.println("Con n:"+n);
 			randomicos = new String[n];
@@ -47,7 +47,7 @@ public class DvEsValido {
 				ConArray.dvEsValido(s);
 			}
 			total = System.currentTimeMillis() - inicio;
-			System.out.println("Con Array se demorÛ: " + total + "ms");
+			System.out.println("Con Array se demor√≥: " + total + "ms");
 			resultados[i][0] = total;
 			// ///////////////
 
@@ -58,7 +58,7 @@ public class DvEsValido {
 			}
 			total = System.currentTimeMillis() - inicio;
 			System.out
-					.println("Con Int y Exception se demorÛ: " + total + "ms");
+					.println("Con Int y Exception se demor√≥: " + total + "ms");
 			resultados[i][1] = total;
 			// /////////////////////////////
 
@@ -73,7 +73,7 @@ public class DvEsValido {
 				ConChar.dvEsValido(s);
 			}
 			total = System.currentTimeMillis() - inicio;
-			System.out.println("Con char se demorÛ: " + total + "ms");
+			System.out.println("Con char se demor√≥: " + total + "ms");
 			resultados[i][2] = total;
 			// ///////////////////////////
 
@@ -83,7 +83,7 @@ public class DvEsValido {
 				ConCharArray.dvEsValido(s);
 			}
 			total = System.currentTimeMillis() - inicio;
-			System.out.println("Con char array se demorÛ: " + total + "ms");
+			System.out.println("Con char array se demor√≥: " + total + "ms");
 			resultados[i][3] = total;
 		}
 		
@@ -97,9 +97,9 @@ public class DvEsValido {
 		System.out.println("Intentando crear un array random...");
 		Random azaroso = new Random();
 		String[] strings = new String[n];// 5000000
-		String abecedario = "abcdefghijklmnÒopqrstuvwxyz";
+		String abecedario = "abcdefghijklmn√±opqrstuvwxyzABCDEFGHIJKLMN√ëOPQRSTUVWXYZ";
 		for (int i = 0; i < strings.length; i++)
-			// One liner m·gico jejeje :P - Julio
+			// One liner m√°gico jejeje :P - Julio
 			strings[i] = (azaroso.nextBoolean()) ? Integer.toString(azaroso
 					.nextInt(100)) : Character.toString(abecedario
 					.charAt(azaroso.nextInt(abecedario.length())));

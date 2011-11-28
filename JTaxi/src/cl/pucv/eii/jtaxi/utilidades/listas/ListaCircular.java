@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio JimÈnez, RenÈ Toro, JosÈ Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio Jim√©nez, Ren√© Toro, Jos√© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -26,6 +26,12 @@ import java.util.NoSuchElementException;
 /*
  * Para que hacer otra clase completa si la diferencia esta en como se recorre.
  */
+/**
+ * Representa una lista indexada de elementos de tipo K.
+ * @author Julio
+ *
+ * @param <K>
+ */
 public class ListaCircular<K> extends ListaDoble<K>{
 
 	@Override
@@ -37,13 +43,17 @@ public class ListaCircular<K> extends ListaDoble<K>{
 	public ListIterator<K> listIterator() {
 		return new IteradorCircular(this);
 	}
-	//Para poder listar de principio a fin.
+	//Para poder listar de principio a fin sin dolores de cabeza.
 	public ListIterator<K> iteradorDoble(){
 		return new IteradorDoble(this);
 	}
 
 	/*
 	 * IteradorDoble tuneado para lista circular.
+	 */
+	/**
+	 * TODO Eliminar c√≥digo extra en verificaciones de los extremos.
+	 *
 	 */
 	private class IteradorCircular implements ListIterator<K>{
 		private int indiceSiguiente;
@@ -59,12 +69,12 @@ public class ListaCircular<K> extends ListaDoble<K>{
 
 		@Override
 		public boolean hasNext() {
-			return ( lista.tamaÒo() > 0 );
+			return ( lista.tama√±o() > 0 );
 		}
 
 		@Override
 		public boolean hasPrevious() {
-			return ( lista.tamaÒo() > 0 );
+			return ( lista.tama√±o() > 0 );
 		}
 
 		@Override
@@ -96,7 +106,7 @@ public class ListaCircular<K> extends ListaDoble<K>{
 			ultimoRetornado = siguiente = (siguiente == lista.getHead()) ? lista.getTail() : siguiente.getAnterior();
 			indiceSiguiente--;
 			if(indiceSiguiente == -1){
-				indiceSiguiente = lista.tamaÒo()-1;
+				indiceSiguiente = lista.tama√±o()-1;
 				siguiente = lista.getTail();
 			}
 			return ultimoRetornado.getItem();
@@ -104,7 +114,7 @@ public class ListaCircular<K> extends ListaDoble<K>{
 
 		@Override
 		public int previousIndex() {
-			return (indiceSiguiente == 0) ? lista.tamaÒo()-1 : indiceSiguiente-1;
+			return (indiceSiguiente == 0) ? lista.tama√±o()-1 : indiceSiguiente-1;
 		}
 
 		@Override

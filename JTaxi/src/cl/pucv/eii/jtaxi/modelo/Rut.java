@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -23,9 +23,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * La clase Rut representa al Rol único tributario utilizado para identificar personas en Chile.
+ * La clase Rut representa al Rol Ãºnico tributario utilizado para identificar personas en Chile.
  * 
- * @TODO Implementar patrón Strategy en toString() y fromString()
+ * TODO Implementar patrÃ³n Strategy en toString() y fromString()
  *
  */
 public class Rut {
@@ -37,7 +37,7 @@ public class Rut {
 	public Rut(int rut, char dv) throws RutInvalidoException {
 		char dv_m = Character.toUpperCase(dv);
 		if (!dvEsValido(dv))
-			throw new RutInvalidoException("Digito verificador contiene caracteres inválidos.");
+			throw new RutInvalidoException("Digito verificador contiene caracteres invÃ¡lidos.");
 		if (rut >= 72000000 || rut < 100000)
 			throw new RutInvalidoException("Rut debe estar estar en el intervalo [1.000.000,72.000.000[");
 		if (generarDV(rut) != dv)

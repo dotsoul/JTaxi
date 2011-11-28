@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -27,7 +27,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 	private NodoDoble<K> head;
 	private NodoDoble<K> tail;
-	private int tamaño = 0;
+	private int tamaÃ±o = 0;
 
 	protected NodoDoble<K> getHead() {
 		return head;
@@ -57,12 +57,12 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 			nuevo.setAnterior(tail);
 			tail = nuevo;
 		}
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
 	public void agregar(int indice, K item) {
-		if(indice < 0 || indice >= tamaño())
+		if(indice < 0 || indice >= tamaÃ±o())
 			throw new IndexOutOfBoundsException();
 		
 		if(indice == 0){
@@ -74,7 +74,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 			prev.setSiguiente(nuevo);			
 		}
 		
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 			nuevo.setSiguiente(head);
 			head = nuevo;
 		}
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public K eliminar(int indice) {
-		if(indice < 0 || indice >= tamaño)
+		if(indice < 0 || indice >= tamaÃ±o)
 			throw new IndexOutOfBoundsException();
 		
 		NodoDoble<K> nodo = getNodo(indice);
@@ -123,7 +123,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public K getObject(int pos) {
-		if (pos < 0 || pos >= tamaño())
+		if (pos < 0 || pos >= tamaÃ±o())
 			throw new IndexOutOfBoundsException();
 
 		for (ListIterator<K> itr = listIterator(); itr.hasNext();) {
@@ -136,13 +136,13 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	}
 
 	@Override
-	public int tamaño() {
-		return this.tamaño;
+	public int tamaÃ±o() {
+		return this.tamaÃ±o;
 	}
 
 	@Override
 	public boolean estaVacia() {
-		return (tamaño == 0);
+		return (tamaÃ±o == 0);
 	}
 
 	private boolean remover(NodoDoble<K> nodo) {
@@ -167,7 +167,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 			nodo.setSiguiente(null);
 		}
 		
-		tamaño--;
+		tamaÃ±o--;
 		return true;
 	}
 
@@ -186,11 +186,11 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	}
 	
 	private NodoDoble<K> getNodo(int indice){
-		if (indice < 0 || indice >= tamaño)
+		if (indice < 0 || indice >= tamaÃ±o)
 			throw new IndexOutOfBoundsException();
 		
 		NodoDoble<K> nodo = head;
-		for(int i = 0;i<tamaño;i++){
+		for(int i = 0;i<tamaÃ±o;i++){
 			if(i == indice){
 				return nodo;
 			}
@@ -200,9 +200,8 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 	}
 
 	/*
-	 * Implementación de la interface ListIterator, fuértemente influenciada por el Iterator
-	 * que utiliza la clase java.util.LinkedList
-	 * Implementada principalmente con fines de aprendizaje.
+	 * ImplementaciÃ³n de la interface ListIterator, basada en el Iterator
+	 * que utiliza la clase java.util.LinkedList -- Julio
 	 */
 	protected class IteradorDoble implements ListIterator<K>{
 		private int indiceSiguiente;
@@ -218,7 +217,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 
 		@Override
 		public boolean hasNext() {
-			return ( indiceSiguiente < lista.tamaño() );
+			return ( indiceSiguiente < lista.tamaÃ±o() );
 		}
 
 		@Override
@@ -245,10 +244,7 @@ public class ListaDoble<K> implements Lista<K>, Iterable<K> {
 		public K previous() {
 			if (!hasPrevious())
 				throw new NoSuchElementException();
-			/* Pucha que cuesta imaginarse los iteradores como pide la definición de la Interface
-			 * (como un cursor que se encuentra entre dos elementos).
-			 * La siguiente linea esta copiada de la implementacion de java.util.LinkedList, pero la
-			 * entiendo. Como el iterador esta entre los nodos, existe el caso en que el iterador
+			/* Como el iterador esta entre los nodos, existe el caso en que el iterador
 			 * se encuentre pasado a la lista, en ese caso siguiente seria null y por lo tanto
 			 * lo que corresponde devolver es el tail de la lista, si siguiente no es null, y estamos
 			 * entre dos nodos no nulos, basta pedirle a siguiente la referencia al anterior.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio JimÈnez, Rene Toro, JosÈ Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio Jim√©nez, Ren√© Toro, Jos√© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -18,16 +18,11 @@
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
 package rut.dvesvalido;
-//Otra opciÛn...
+//Otra opciÔøΩn...
 public class ConChar {
 
 	public static boolean dvEsValido(char dv){
-		String dv_s = ""+dv;
-		if (Character.isDigit(dv)){
-			int aux = Integer.parseInt(dv_s);
-			return (aux > -1 || aux < 10);
-		} else//con equalsIgnoreCase hay una leve baja en el rendimiento :P
-			return ("k".equals(dv_s) || "K".equals(dv_s));
+			return ('k' == dv || 'K' == dv || ((int)dv >= 48 && (int)dv <= 57) );
 	}
 	
 }

@@ -1,6 +1,6 @@
 package rut.dvesvalido;
 /*
- * Copyright (c) 2011, Julio JimÈnez, Rene Toro, JosÈ Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio Jim√©nez, Ren√© Toro, Jos√© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.

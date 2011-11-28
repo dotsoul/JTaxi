@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -21,27 +21,27 @@ package cl.pucv.eii.jtaxi.modelo;
 
 public class Pasajero extends Persona {
 
-    private Dirección destino;
-    private int teléfono;
-    private Dirección domicilio;
+    private DirecciÃ³n destino;
+    private int telÃ©fono;
+    private DirecciÃ³n domicilio;
 
-    public Pasajero(String nombre, Rut rut, Dirección destino,int teléfono, Dirección domicilio){
+    public Pasajero(String nombre, Rut rut, DirecciÃ³n destino,int telÃ©fono, DirecciÃ³n domicilio){
         super(nombre, rut);
         this.destino = destino;
-        this.teléfono=teléfono;
+        this.telÃ©fono=telÃ©fono;
         this.domicilio=domicilio;
     }
 
-    public Dirección getDestino() {
+    public DirecciÃ³n getDestino() {
         return destino;
     }
 
-    public Dirección getDomicilio() {
+    public DirecciÃ³n getDomicilio() {
         return domicilio;
     }
 
     public int getTelefono() {
-        return teléfono;
+        return telÃ©fono;
     }
     
 }

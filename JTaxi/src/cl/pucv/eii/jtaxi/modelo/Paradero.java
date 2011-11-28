@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -23,9 +23,9 @@ public class Paradero {
 
     private String nombre;
     private Sector sector;
-    private Dirección direccion;
+    private DirecciÃ³n direccion;
 
-    public Paradero(String n,Sector s,Dirección d){
+    public Paradero(String n,Sector s,DirecciÃ³n d){
         nombre = n;
         sector = s;
         direccion = d;
@@ -39,7 +39,7 @@ public class Paradero {
         return nombre;
     }
 
-    public Dirección getDireccion(){
+    public DirecciÃ³n getDireccion(){
         return direccion;
     }
     

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -54,9 +54,9 @@ public class Taxi {
     	nPasajeros++;
     }
 
-    public Dirección siguienteParada(){
+    public DirecciÃ³n siguienteParada(){
     	if(estaOcupado()){
-    		Dirección d = pasajeros[nPasajeros-1].getDestino();
+    		DirecciÃ³n d = pasajeros[nPasajeros-1].getDestino();
     		nPasajeros--;
     		return d;
     	} else {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -26,7 +26,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
 	private NodoSimple<K> head;
 	private NodoSimple<K> tail;
-	private int tamaño = 0;
+	private int tamaÃ±o = 0;
 
 	protected NodoSimple<K> getHead() {
 		return head;
@@ -51,12 +51,12 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 			tail.setSiguiente(nuevo);
 			tail = nuevo;
 		}
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
 	public void agregar(int indice, K item) {
-		if (indice < 0 || indice >= tamaño())
+		if (indice < 0 || indice >= tamaÃ±o())
 			throw new IndexOutOfBoundsException();
 
 		if (indice == 0) {
@@ -67,7 +67,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 			prev.setSiguiente(nuevo);
 		}
 
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 			nuevo.setSiguiente(head);
 			head = nuevo;
 		}
-		tamaño++;
+		tamaÃ±o++;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public K eliminar(int indice) {
-		if (indice < 0 || indice >= tamaño)
+		if (indice < 0 || indice >= tamaÃ±o)
 			throw new IndexOutOfBoundsException();
 
 		return removerSiguiente(getNodoAnterior(indice));
@@ -117,7 +117,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
 	@Override
 	public K getObject(int pos) {
-		if (pos < 0 || pos >= tamaño())
+		if (pos < 0 || pos >= tamaÃ±o())
 			throw new IndexOutOfBoundsException();
 
 		for (IteradorSimple itr = iteradorSimple(); itr.hasNext();) {
@@ -130,13 +130,13 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	}
 
 	@Override
-	public int tamaño() {
-		return this.tamaño;
+	public int tamaÃ±o() {
+		return this.tamaÃ±o;
 	}
 
 	@Override
 	public boolean estaVacia() {
-		return (tamaño == 0);
+		return (tamaÃ±o == 0);
 	}
 
 	private K removerSiguiente(NodoSimple<K> nodo) {
@@ -154,7 +154,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 		}
 
 		aRemover.setSiguiente(null);
-		tamaño--;
+		tamaÃ±o--;
 		return aRemover.getItem();
 	}
 
@@ -176,14 +176,14 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	}
 
 	private NodoSimple<K> getNodoAnterior(int indice) {
-		if (indice < 0 || indice >= tamaño)
+		if (indice < 0 || indice >= tamaÃ±o)
 			throw new IndexOutOfBoundsException();
 
 		if (indice == 0)
 			return null;
 
 		NodoSimple<K> nodo = head;
-		for (int i = 0; i < tamaño; i++) {
+		for (int i = 0; i < tamaÃ±o; i++) {
 			if (i == indice - 1) {
 				return nodo;
 			}
@@ -193,9 +193,8 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 	}
 
 	/*
-	 * Implementación de la interface Iterator, fuértemente influenciada por el
-	 * Iterator que utiliza la clase java.util.LinkedList Implementada
-	 * principalmente con fines de aprendizaje.
+	 * ImplementaciÃ³n de la interface Iterator, basada en el iterador
+	 * de listadoble
 	 */
 	private class IteradorSimple implements Iterator<K> {
 		private int indiceSiguiente;
@@ -211,7 +210,7 @@ public class ListaSimple<K> implements Lista<K>, Iterable<K> {
 
 		@Override
 		public boolean hasNext() {
-			return (indiceSiguiente < lista.tamaño());
+			return (indiceSiguiente < lista.tamaÃ±o());
 		}
 
 		@Override

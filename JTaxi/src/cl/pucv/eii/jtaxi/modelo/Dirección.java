@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -19,12 +19,12 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
-public class Dirección {
+public class DirecciÃ³n {
 
 	private String calle;
 	private int numero;
 	
-	public Dirección(String calle, int numero){
+	public DirecciÃ³n(String calle, int numero){
 		this.calle = calle;
 		this.numero = numero;
 	}

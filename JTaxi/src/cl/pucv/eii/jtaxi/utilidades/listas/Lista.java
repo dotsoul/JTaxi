@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
+ * Copyright (c) 2011, Julio JimÃ©nez, RenÃ© Toro, JosÃ© Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -27,7 +27,7 @@ package cl.pucv.eii.jtaxi.utilidades.listas;
 public interface Lista<K> {
 
 	/**
-	 * Agrega item en la última posición de la lista
+	 * Agrega item en la Ãºltima posiciÃ³n de la lista
 	 * 
 	 * @param item
 	 *            objeto a agregar
@@ -35,10 +35,10 @@ public interface Lista<K> {
 	public void agregar(K item);
 
 	/**
-	 * Agrega item en la posición pos
+	 * Agrega item en la posiciÃ³n pos
 	 * 
 	 * @param indice
-	 *            índice donde se ubicará item
+	 *            Ã­ndice donde se ubicarÃ¡ item
 	 * @param item
 	 *            objeto a agregar
 	 */
@@ -63,20 +63,20 @@ public interface Lista<K> {
 	public boolean eliminar(K item);
 
 	/**
-	 * Elimina el objeto ubicado en la posición indicada.
+	 * Elimina el objeto ubicado en la posiciÃ³n indicada.
 	 * 
 	 * @param indice
-	 *            índice del objeto a eliminar
+	 *            Ã­ndice del objeto a eliminar
 	 * @return el objeto eliminado
 	 */
 	public K eliminar(int indice);
 
 	/**
-	 * Retorna el índice de la primera entrada de item en la lista
+	 * Retorna el Ã­ndice de la primera entrada de item en la lista
 	 * 
 	 * @param item
 	 *            objeto a buscar
-	 * @return el índice de la primera entrada de item en la lista o -1 si item
+	 * @return el Ã­ndice de la primera entrada de item en la lista o -1 si item
 	 */
 	public int getIndice(K item);
 
@@ -96,7 +96,7 @@ public interface Lista<K> {
 	 * 
 	 * @return un int con la cantidad de items en la lista.
 	 */
-	public int tamaño();
+	public int tamaÃ±o();
 
 	/**
 	 * Devuelve true si la lista no tiene elementos.
