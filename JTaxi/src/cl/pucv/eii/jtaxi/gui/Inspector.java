@@ -227,13 +227,13 @@ public class Inspector extends JDialog implements ActionListener {
 	private void setEstructuraModelo(String[] estructuras) {
 		//{ "Sector", "Paradero", "Flota", "Taxi","Taxista", "Pasajero", "Rut" };
 		AbstractTableModel[] modelos = new AbstractTableModel[] {
-				new SectorTableModel(central),
-				new ParaderoTableModel(central),
+				new SectorTableModel(central, central),
+				new ParaderoTableModel(central, central),
 				new FlotaTableModel(central,central),
-				new TaxiTableModel(central),
-				new TaxistaTableModel(central),
-				new PasajeroTableModel(central),
-				new RutTableModel(central, rutsTemporales)
+				new TaxiTableModel(central, central),
+				new TaxistaTableModel(central, central),
+				new PasajeroTableModel(central, central),
+				new RutTableModel(central, central, rutsTemporales)
 				};
 		for(int i = 0;i<estructuras.length;i++){
 			estructuraModelo.put(estructuras[i], modelos[i]);

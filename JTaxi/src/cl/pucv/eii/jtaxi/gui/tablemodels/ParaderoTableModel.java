@@ -21,19 +21,23 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 
 import javax.swing.table.AbstractTableModel;
 
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class ParaderoTableModel extends AbstractTableModel {
+public class ParaderoTableModel extends AbstractTableModel implements Observer {
 
 	private Central central;
 	private ListaDoble<Paradero> lista;
 	
-	public ParaderoTableModel (Central central){
+	public ParaderoTableModel (Observable o, Central central){
+		o.agregarObserver(this);
 		this.central = central;
+		updateLista();
 	}
 	
 	@Override
@@ -49,26 +53,29 @@ public class ParaderoTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		updateLista();
-		
 		return lista.tamaño();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		updateLista();
 		Paradero item = lista.getObject(rowIndex);
 		Object[] aux = {item.getNombre(),item.getDireccion()};
 		return aux[columnIndex];
 	}
 	
-	public void updateLista(){
+	private void updateLista(){
 		lista = new ListaDoble<>();
 		ListaDoble<Sector> liSector = new ListaDoble<>();
 		central.listarSectores(liSector);
 		for (Sector s : liSector)
 			s.listarParaderos(lista	);
 		
+	}
+
+	@Override
+	public void actualizar(String estructura) {
+		if ("Paradero".equals(estructura))
+			updateLista();
 	}
 
 }

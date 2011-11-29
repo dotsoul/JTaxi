@@ -22,6 +22,7 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 import javax.swing.table.AbstractTableModel;
 
 import cl.pucv.eii.jtaxi.gui.ListaContadora;
+import cl.pucv.eii.jtaxi.interfaces.Observable;
 import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
@@ -35,8 +36,8 @@ public class SectorTableModel extends AbstractTableModel implements Observer {
 	private Lista<Sector> sectores;
 	private Central central;
 
-	public SectorTableModel(Central central) {
-		central.agregarObserver(this);
+	public SectorTableModel(Observable o,Central central) {
+		o.agregarObserver(this);
 		this.central = central;
 		reloadLista();
 	}
@@ -73,7 +74,7 @@ public class SectorTableModel extends AbstractTableModel implements Observer {
 
 	@Override
 	public void actualizar(String cambio) {
-		if (cambio == "Sector")
+		if ("Sector".equals(cambio))
 			reloadLista();
 	}
 

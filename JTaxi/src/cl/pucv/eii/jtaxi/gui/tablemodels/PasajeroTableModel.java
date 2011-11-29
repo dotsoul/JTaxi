@@ -21,6 +21,8 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 
 import javax.swing.table.AbstractTableModel;
 
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Pasajero;
@@ -28,13 +30,15 @@ import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class PasajeroTableModel extends AbstractTableModel {
+public class PasajeroTableModel extends AbstractTableModel implements Observer {
 
 	private ListaDoble<Pasajero> lista;
 	private Central central;
 	
-	public PasajeroTableModel (Central central){
+	public PasajeroTableModel (Observable o, Central central){
+		o.agregarObserver(this);
 		this.central = central;
+		updateLista();
 	}
 	
 	@Override
@@ -50,13 +54,11 @@ public class PasajeroTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		updateLista();
 		return lista.tamaño();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		updateLista();
 		Pasajero item = lista.getObject(rowIndex);
 		Object[] aux = {item.getNombre(),item.getRut().toString(),item.getTelefono(),
 				item.getDestino().toString()};
@@ -72,6 +74,12 @@ public class PasajeroTableModel extends AbstractTableModel {
 			f.listarTaxis(liTaxi);
 		for (Taxi t : liTaxi)
 			t.listarPasajeros(lista);
+	}
+
+	@Override
+	public void actualizar(String estructura) {
+		if("Pasajero".equals(estructura))
+			updateLista();
 	}
 
 }

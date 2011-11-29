@@ -58,6 +58,7 @@ public class Central implements Observable {
 				return false;
 
 		buscarSector(sector).agregarParadero(p);
+		notificarObservers("Paradero");
 		return true;
 	}
 
@@ -72,7 +73,11 @@ public class Central implements Observable {
 		Flota f = buscarFlotaTaxi(patente);
 		if (f == null)
 			return false;
-		return f.agregarPasajeroTaxi(pasajero, patente);
+		if(f.agregarPasajeroTaxi(pasajero, patente)){
+			notificarObservers("Pasajero");
+			return true;
+		}
+		return false;
 	}
 
 	public boolean agregarSector(Sector s) {
@@ -214,18 +219,31 @@ public class Central implements Observable {
 		for (Flota f : flotas) {
 			f.eliminarParadero(nombre);
 		}
+		notificarObservers("Paradero");
 		return true;
 	}
 	
 	public boolean eliminarPasajero(Rut r){
 		for (Flota f: flotas)
-				if (f.eliminarPasajero(r))
+				if (f.eliminarPasajero(r)){
+					notificarObservers("Pasajero");
 					return true;
+				}
 		return false;
 	}
 
 	public boolean eliminarRut(Rut r){
-		return (eliminarTaxista(r) || eliminarPasajero(r));
+		if(eliminarTaxista(r)){
+			notificarObservers("Taxista");
+			return true;
+		}
+		
+		if(eliminarPasajero(r)){
+			notificarObservers("Pasajero");
+			return true;
+		}
+	
+		return false;
 	}
 
 	public boolean eliminarSector(String nombre) {

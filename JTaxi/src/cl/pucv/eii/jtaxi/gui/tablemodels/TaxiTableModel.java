@@ -22,6 +22,8 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 import javax.swing.table.AbstractTableModel;
 
 import cl.pucv.eii.jtaxi.gui.ListaContadora;
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
@@ -30,12 +32,13 @@ import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class TaxiTableModel extends AbstractTableModel {
+public class TaxiTableModel extends AbstractTableModel implements Observer {
 
 	private Lista<Taxi> lista;
 	private Central central;
 	
-	public TaxiTableModel (Central central){
+	public TaxiTableModel (Observable o, Central central){
+		o.agregarObserver(this);
 		this.central = central;
 	}
 	
@@ -52,13 +55,11 @@ public class TaxiTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		updateLista();
 		return lista.tamaño();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		updateLista();
 		Taxi item = lista.getObject(rowIndex);
 		Flota f = central.buscarFlotaTaxi(item.getPatente());
 		ListaContadora<Paradero> nParaderos = new ListaContadora<>();
@@ -79,6 +80,12 @@ public class TaxiTableModel extends AbstractTableModel {
 		central.listarFlotas(liFlotas);
 		for (Flota f : liFlotas)
 			f.listarTaxis(lista);
+	}
+
+	@Override
+	public void actualizar(String estructura) {
+		if("Taxi".equals(estructura))
+			updateLista();
 	}
 
 }

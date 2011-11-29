@@ -21,6 +21,8 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 
 import javax.swing.table.AbstractTableModel;
 
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Pasajero;
@@ -31,23 +33,24 @@ import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
 
 @SuppressWarnings("serial")
-public class RutTableModel extends AbstractTableModel {
+public class RutTableModel extends AbstractTableModel implements Observer {
 
 	private ListaDoble<Rut> lista;
 	private Lista<Rut> ruts;
 	private Central central;
-	
-	public RutTableModel (Central central, ListaDoble<Rut> ruts){
+
+	public RutTableModel(Observable o, Central central, ListaDoble<Rut> ruts) {
+		o.agregarObserver(this);
 		this.central = central;
 		this.ruts = ruts;
 	}
-	
+
 	@Override
-	public String getColumnName(int columnIndex){
-		String[] columnName = {"RUT", "DV"};
+	public String getColumnName(int columnIndex) {
+		String[] columnName = { "RUT", "DV" };
 		return columnName[columnIndex];
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return 2;
@@ -55,21 +58,17 @@ public class RutTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		updateLista();
 		return lista.tamaño();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		updateLista();
 		Rut item = lista.getObject(rowIndex);
-		Object[] aux = {
-				item.getNumero(),
-				item.getDV()};
+		Object[] aux = { item.getNumero(), item.getDV() };
 		return aux[columnIndex];
 	}
-	
-	private void updateLista(){
+
+	private void updateLista() {
 		lista = new ListaDoble<Rut>();
 		ListaDoble<Flota> liFlotas = new ListaDoble<>();
 		ListaDoble<Pasajero> liPasa = new ListaDoble<>();
@@ -86,8 +85,14 @@ public class RutTableModel extends AbstractTableModel {
 			t.listarPasajeros(liPasa);
 		for (Pasajero p : liPasa)
 			lista.agregar(p.getRut());
-		for(Rut r: ruts)
+		for (Rut r : ruts)
 			lista.agregar(r);
+	}
+
+	@Override
+	public void actualizar(String estructura) {
+		if ("Rut".equals(estructura))
+			updateLista();
 	}
 
 }

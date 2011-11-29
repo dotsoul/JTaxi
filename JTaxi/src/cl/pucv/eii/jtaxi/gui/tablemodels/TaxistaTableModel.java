@@ -20,19 +20,21 @@
 package cl.pucv.eii.jtaxi.gui.tablemodels;
 
 import javax.swing.table.AbstractTableModel;
-
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class TaxistaTableModel extends AbstractTableModel {
+public class TaxistaTableModel extends AbstractTableModel implements Observer{
 
 	private Central central;
 	private ListaDoble<Taxista> lista = new ListaDoble<>();
 	
-	public TaxistaTableModel (Central central){
+	public TaxistaTableModel (Observable o, Central central){
+		o.agregarObserver(this);
 		this.central = central;
 	}
 	
@@ -49,13 +51,11 @@ public class TaxistaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		updateLista();
 		return lista.tamaño();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		updateLista();
 		Taxista item = lista.getObject(rowIndex);
 		Object[] aux = {
 				item.getNombre(),
@@ -70,6 +70,12 @@ public class TaxistaTableModel extends AbstractTableModel {
 		central.listarFlotas(aux);
 		for (Flota f : aux)
 			f.listarTaxista(lista);
+	}
+
+	@Override
+	public void actualizar(String estructura) {
+		if("Taxista".equals(estructura))
+			updateLista();
 	}
 	
 
