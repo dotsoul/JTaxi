@@ -74,7 +74,7 @@ public class SectorTableModel extends AbstractTableModel implements Observer {
 
 	@Override
 	public void actualizar(String cambio) {
-		if ("Sector".equals(cambio))
+		if ("Sector".equals(cambio) || "Paradero".equals(cambio))
 			reloadLista();
 	}
 

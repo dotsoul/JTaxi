@@ -59,6 +59,7 @@ public class Central implements Observable {
 
 		buscarSector(sector).agregarParadero(p);
 		notificarObservers("Paradero");
+		notificarObservers("Sector");
 		return true;
 	}
 
@@ -75,6 +76,7 @@ public class Central implements Observable {
 			return false;
 		if(f.agregarPasajeroTaxi(pasajero, patente)){
 			notificarObservers("Pasajero");
+			notificarObservers("Taxi");
 			return true;
 		}
 		return false;
@@ -91,7 +93,12 @@ public class Central implements Observable {
 
 	public boolean agregarTaxiFlota(Taxi taxi, Flota flota){
 		if(flota == null) return false;
-		return agregarTaxiFlota(taxi, flota.getNombre());
+		if( agregarTaxiFlota(taxi, flota.getNombre())){
+			notificarObservers("Taxi");
+			notificarObservers("Flota");
+			return true;
+		}
+		return false;
 	}
 
 	public boolean agregarTaxiFlota(Taxi taxi, String flota) {
@@ -103,6 +110,8 @@ public class Central implements Observable {
 		
 		if (buscarFlotaTaxi(taxi.getPatente()) == null){
 			f.agregarTaxi(taxi);
+			notificarObservers("Taxi");
+			notificarObservers("Flota");
 			return true;
 		}
 		
@@ -118,7 +127,12 @@ public class Central implements Observable {
 		if (f != null)
 			return false;
 
-		return flota.agregarTaxista(nuevo);
+		if( flota.agregarTaxista(nuevo) ){
+			notificarObservers("Taxista");
+			notificarObservers("Flota");
+		}
+		
+		return false;
 	}
 
 	public boolean agregarTaxistaTaxi(String patente, Rut rut) {
@@ -129,8 +143,12 @@ public class Central implements Observable {
 
 		if (f == null || y == null || f != y)
 			return false;
+		
+		if (f.setTaxistaTaxi(rut, patente)){
+			notificarObservers("Taxi");
+		}
 
-		return f.setTaxistaTaxi(rut, patente);
+		return false;
 	}
 
 	/**
@@ -227,6 +245,7 @@ public class Central implements Observable {
 		for (Flota f: flotas)
 				if (f.eliminarPasajero(r)){
 					notificarObservers("Pasajero");
+					notificarObservers("Rut");
 					return true;
 				}
 		return false;
@@ -235,11 +254,13 @@ public class Central implements Observable {
 	public boolean eliminarRut(Rut r){
 		if(eliminarTaxista(r)){
 			notificarObservers("Taxista");
+			notificarObservers("Rut");
 			return true;
 		}
 		
 		if(eliminarPasajero(r)){
 			notificarObservers("Pasajero");
+			notificarObservers("Rut");
 			return true;
 		}
 	
@@ -269,7 +290,7 @@ public class Central implements Observable {
 		Flota f = buscarFlotaTaxi(patente);
 		if (f == null)
 			return false;
-
+		notificarObservers("Taxi");
 		f.eliminarTaxi(patente);
 		return true;
 	}
@@ -278,7 +299,12 @@ public class Central implements Observable {
 		Flota f = buscarFlotaTaxista(rut);
 		if (f == null)
 			return false;
-		return f.eliminarTaxista(rut);
+		if(f.eliminarTaxista(rut)){
+			notificarObservers("Taxista");
+			notificarObservers("Rut");
+			return true;
+		}
+		return false;
 	}
 
 	public Lista<Flota> getFlotas() {
