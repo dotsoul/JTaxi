@@ -22,20 +22,24 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 import javax.swing.table.AbstractTableModel;
 
 import cl.pucv.eii.jtaxi.gui.ListaContadora;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
-import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
+import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class FlotaTableModel extends AbstractTableModel {
+public class FlotaTableModel extends AbstractTableModel implements Observer{
 
-	private Lista<Flota> flotas;
+	private ListaDoble<Flota> flotas;
+	private Central central;
 	
 	public FlotaTableModel (Central central){
-		this.flotas = central.getFlotas();
+		central.agregarObserver(this);
+		this.central = central;
+		reloadLista();
 	}
 	
 	@Override
@@ -65,6 +69,17 @@ public class FlotaTableModel extends AbstractTableModel {
 		item.listarParaderos(nParaderos);
 		Object[] aux = {item.getNombre(),new Integer(nTaxistas.tamaño()),new Integer(nParaderos.tamaño()),new Integer(nTaxis.tamaño())};
 		return aux[columnIndex];
+	}
+
+	@Override
+	public void actualizar(String cambio) {
+		if(cambio == "Flota")
+			reloadLista();
+	}
+	
+	private void reloadLista(){
+		flotas = new ListaDoble<>();
+		central.listarFlotas(flotas);
 	}
 
 }

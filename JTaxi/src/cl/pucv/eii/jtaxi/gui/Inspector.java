@@ -21,6 +21,7 @@ package cl.pucv.eii.jtaxi.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -67,6 +68,7 @@ public class Inspector extends JDialog implements ActionListener {
 	private JTable tabla = new JTable();
 	private Central central;
 	private ListaDoble<Rut> rutsTemporales;
+	private HashMap<String, AbstractTableModel> estructuraModelo = new HashMap<>();
 
 	public Inspector(JFrame dueño, Central central, ListaDoble<Rut> r) {
 		super(dueño, "Manipular Estructuras de JTaxi", true);
@@ -81,10 +83,12 @@ public class Inspector extends JDialog implements ActionListener {
 
 		manipularLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
 
-		estructuraCB.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"Sector", "Paradero", "Flota", "Taxi", "Taxista", "Pasajero",
-				"Rut" }));
-
+		String[] aux = new String[] { "Sector", "Paradero", "Flota", "Taxi",
+				"Taxista", "Pasajero", "Rut" };
+		estructuraCB.setModel(new DefaultComboBoxModel<String>(aux));
+		
+		setEstructuraModelo(aux);
+		
 		estructuraCB.setSelectedIndex(2);
 		estructuraCB.setActionCommand("cambioEstructura");
 		estructuraCB.addActionListener(this);
@@ -219,40 +223,28 @@ public class Inspector extends JDialog implements ActionListener {
 		pack();
 	}
 
-	/**
-	 * 
-	 * no hay tiempo para la elegancia.
-	 */
+	private void setEstructuraModelo(String[] estructuras) {
+		//{ "Sector", "Paradero", "Flota", "Taxi","Taxista", "Pasajero", "Rut" };
+		AbstractTableModel[] modelos = new AbstractTableModel[] {
+				new SectorTableModel(central),
+				new ParaderoTableModel(central),
+				new FlotaTableModel(central),
+				new TaxiTableModel(central),
+				new TaxistaTableModel(central),
+				new PasajeroTableModel(central),
+				new RutTableModel(central, rutsTemporales)
+				};
+		for(int i = 0;i<estructuras.length;i++){
+			estructuraModelo.put(estructuras[i], modelos[i]);
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 
 		switch (evt.getActionCommand()) {
 		case "cambioEstructura":
-			AbstractTableModel model = null;
-			switch (estructuraCB.getSelectedItem().toString()) {
-			case "Sector":
-				model = new SectorTableModel(central);
-				break;
-			case "Flota":
-				model = new FlotaTableModel(central);
-				break;
-			case "Paradero":
-				model = new ParaderoTableModel(central);
-				break;
-			case "Pasajero":
-				model = new PasajeroTableModel(central);
-				break;
-			case "Rut":
-				model = new RutTableModel(central, rutsTemporales);
-				break;
-			case "Taxista":
-				model = new TaxistaTableModel(central);
-				break;
-			case "Taxi":
-				model = new TaxiTableModel(central);
-				break;
-			}
-			tabla.setModel(model);
+			tabla.setModel(estructuraModelo.get(estructuraCB.getSelectedItem().toString()));
 			tabla.updateUI();
 			break;
 
@@ -346,69 +338,84 @@ public class Inspector extends JDialog implements ActionListener {
 			}
 			break;
 		case "Agregar":
-			String agregarEstructura = estructuraCB.getSelectedItem().toString();
+			String agregarEstructura = estructuraCB.getSelectedItem()
+					.toString();
 			String auxAgregarS;
 			Rut auxAgregarR;
 			switch (agregarEstructura) {
 			case "Taxista":
-				Taxista nuevoTaxista = new Taxista(pedirString("Ingrese nombre de taxista:"),pedirRut("Ingrese rut de taxista"),pedirInt("Ingrese sueldo",1));
-				Flota flotaNuevoTaxista = central.buscarFlota(pedirString("Ingrese nombre flota"));
-				if(flotaNuevoTaxista == null)
+				Taxista nuevoTaxista = new Taxista(
+						pedirString("Ingrese nombre de taxista:"),
+						pedirRut("Ingrese rut de taxista"), pedirInt(
+								"Ingrese sueldo", 1));
+				Flota flotaNuevoTaxista = central
+						.buscarFlota(pedirString("Ingrese nombre flota"));
+				if (flotaNuevoTaxista == null)
 					mostrarDialogoError("No se encuentra la flota.");
-				else
-					if(!central.agregarTaxistaFlota(nuevoTaxista, flotaNuevoTaxista))
-						mostrarDialogoError("Ya existe otro taxista con ese rut");
+				else if (!central.agregarTaxistaFlota(nuevoTaxista,
+						flotaNuevoTaxista))
+					mostrarDialogoError("Ya existe otro taxista con ese rut");
 				break;
 			case "Flota":
 				auxAgregarS = pedirString("Ingrese nombre flota: ");
 				Flota nuevaFlota = new Flota(auxAgregarS);
-				if(!central.agregarFlota(nuevaFlota))
+				if (!central.agregarFlota(nuevaFlota))
 					mostrarDialogoError("Ya existe una flota con ese nombre.");
 				break;
 			case "Sector":
 				auxAgregarS = pedirString("Ingrese nombre sector: ");
 				Sector nuevoSector = new Sector(auxAgregarS);
-				if(!central.agregarSector(nuevoSector))
+				if (!central.agregarSector(nuevoSector))
 					mostrarDialogoError("Ya existe un sector con ese nombre.");
 				break;
 			case "Taxi":
-				Taxi nuevoTaxi = new Taxi(pedirString("Ingrese patente:"),pedirString("Ingrese marca:"),pedirString("Ingrese modelo:"),pedirInt("Ingrese capacidad > 0:",1));
-				Flota flotaNuevoTaxi = central.buscarFlota(pedirString("Ingrese nombre flota"));
-				if(flotaNuevoTaxi == null)
+				Taxi nuevoTaxi = new Taxi(pedirString("Ingrese patente:"),
+						pedirString("Ingrese marca:"),
+						pedirString("Ingrese modelo:"), pedirInt(
+								"Ingrese capacidad > 0:", 1));
+				Flota flotaNuevoTaxi = central
+						.buscarFlota(pedirString("Ingrese nombre flota"));
+				if (flotaNuevoTaxi == null)
 					mostrarDialogoError("No se encuentra la flota.");
-				else
-					if(!central.agregarTaxiFlota(nuevoTaxi, flotaNuevoTaxi)){
-						mostrarDialogoError("Ya existe otro taxi con esa patente.");
-					}
+				else if (!central.agregarTaxiFlota(nuevoTaxi, flotaNuevoTaxi)) {
+					mostrarDialogoError("Ya existe otro taxi con esa patente.");
+				}
 				break;
 			case "Pasajero":
-				Pasajero nuevoPasajero = new Pasajero(pedirString("Ingrese nombre del pasajero"),pedirRut("Ingrese rut del pasajero"),pedirInt("Ingrese teléfono del pasajero",0),
+				Pasajero nuevoPasajero = new Pasajero(
+						pedirString("Ingrese nombre del pasajero"),
+						pedirRut("Ingrese rut del pasajero"),
+						pedirInt("Ingrese teléfono del pasajero", 0),
 						pedirString("Ingrese la dirección de destino del pasajero"));
 				auxAgregarS = pedirString("Ingrese patente del taxi.");
 				Flota faux = central.buscarFlotaTaxi(auxAgregarS);
-				if(faux == null){
+				if (faux == null) {
 					mostrarDialogoError("El taxi no existe");
-				}else{
-					if (!central.agregarPasajeroTaxi(nuevoPasajero, auxAgregarS))
+				} else {
+					if (!central
+							.agregarPasajeroTaxi(nuevoPasajero, auxAgregarS))
 						mostrarDialogoError("Ya existe el pasajero");
 				}
 
 				break;
 			case "Paradero":
-				Paradero nuevoParadero = new Paradero(pedirString("Ingrese nombre de paradero:"),pedirString("Ingrese dirección del paradero"));
-				Sector sectorNuevoParadero = central.buscarSector(pedirString("Ingrese nombre del sector:"));
-				
-				if(sectorNuevoParadero == null)
+				Paradero nuevoParadero = new Paradero(
+						pedirString("Ingrese nombre de paradero:"),
+						pedirString("Ingrese dirección del paradero"));
+				Sector sectorNuevoParadero = central
+						.buscarSector(pedirString("Ingrese nombre del sector:"));
+
+				if (sectorNuevoParadero == null)
 					mostrarDialogoError("No se encuentra el sector.");
-				else
-					if(!central.agregarParaderoSector(nuevoParadero, sectorNuevoParadero.getNombre()))
-						mostrarDialogoError("Ya existe un paradero con ese nombre.");
+				else if (!central.agregarParaderoSector(nuevoParadero,
+						sectorNuevoParadero.getNombre()))
+					mostrarDialogoError("Ya existe un paradero con ese nombre.");
 
 				break;
 			case "Rut":
 				auxAgregarR = pedirRut("Ingrese un rut valido y en formato XX.XXX.XXX-X/X.XXX.XXX-X");
 				auxAgregarS = Long.toString(auxAgregarR.getNumero());
-				if(!locate(0,auxAgregarS))
+				if (!locate(0, auxAgregarS))
 					rutsTemporales.agregar(auxAgregarR);
 				else
 					mostrarDialogoError("Ya existe el rut en el sistema.");
@@ -431,27 +438,26 @@ public class Inspector extends JDialog implements ActionListener {
 		}
 		return false;
 	}
-	
-	private int pedirInt(String mensaje, int min){
+
+	private int pedirInt(String mensaje, int min) {
 		String input;
 		int n = -1;
 		boolean valido = false;
-		while(!valido){
+		while (!valido) {
 			input = pedirString(mensaje);
-			try{
+			try {
 				n = Integer.parseInt(input);
-				if(n > min){
+				if (n > min) {
 					valido = true;
 				} else {
-					mostrarDialogoError("Debe ser mayor que "+min);
+					mostrarDialogoError("Debe ser mayor que " + min);
 				}
-			}
-			catch(NumberFormatException e){
+			} catch (NumberFormatException e) {
 				mostrarDialogoError("Debe ingresar un número");
 			}
-			
+
 		}
-		
+
 		return n;
 	}
 

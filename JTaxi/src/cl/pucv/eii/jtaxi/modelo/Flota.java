@@ -36,13 +36,14 @@ public class Flota {
 		this.nombre = nombre;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void listarTaxis(Lista<Taxi> lista) {
-		for (Taxi t : taxis)
-			lista.agregar(t);
+	public boolean agregarParadero(Paradero p) {
+		if (p == null)
+			return false;
+		if (buscarParadero(p.getNombre()) == null) {
+			paraderos.agregar(p);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
@@ -54,7 +55,7 @@ public class Flota {
 		t.agregarPasajero(pasajero);
 		return true;
 	}
-	
+
 	public boolean agregarTaxi(Taxi t) {
 		if (t == null)
 			return false;
@@ -64,22 +65,28 @@ public class Flota {
 		}
 		return false;
 	}
-
-	public boolean eliminarTaxi(String patente) {
-		Taxi t = buscarTaxi(patente);
-		if (t != null) {
-			taxis.eliminar(t);
+	
+	public boolean agregarTaxista(Taxista nuevo) {
+		if (nuevo == null)
+			return false;
+		if (buscarTaxista(nuevo.getRut()) == null) {
+			taxistas.agregar(nuevo);
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean eliminarPasajero(Rut rut) {
-		Taxi t = buscarTaxiPasajero(rut);
-		return (t == null) ? false : t.eliminarPasajero(rut);
-		
-	}
 
+	public Paradero buscarParadero(String nombre) {
+		Paradero p;
+		for (ListIterator<Paradero> itr = paraderos.iteradorDoble(); itr
+				.hasNext();) {
+			p = itr.next();
+			if (p.getNombre().equals(nombre))
+				return p;
+		}
+		return null;
+	}
+	
 	public Taxi buscarTaxi(String patente) {
 		for (Taxi t : taxis)
 			if (t.getPatente().equals(patente))
@@ -94,30 +101,45 @@ public class Flota {
 		return null;
 	}
 
-	public void listarTaxista(Lista<Taxista> lista) {
+	public Taxista buscarTaxista(Rut rut) {
 		for (Taxista t : taxistas)
-			lista.agregar(t);
+			if (t.getRut().equals(rut))
+				return t;
+		return null;
 	}
 
-	public boolean agregarTaxista(Taxista nuevo) {
-		if (nuevo == null)
-			return false;
-		if (buscarTaxista(nuevo.getRut()) == null) {
-			taxistas.agregar(nuevo);
+	public Taxi buscarTaxiTaxista(Rut rut) {
+		if (rut == null)
+			return null;
+		for (Taxi t : taxis) {
+			if (t.getTaxista() != null && t.getTaxista().getRut().equals(rut))
+				return t;
+		}
+		return null;
+	}
+
+	public boolean eliminarParadero(String nombre) {
+		Paradero p = buscarParadero(nombre);
+		if (p != null) {
+			paraderos.eliminar(p);
+			return true;
+		}
+		return false; // en caso de que no exista el paradero
+	}
+
+	public boolean eliminarPasajero(Rut rut) {
+		Taxi t = buscarTaxiPasajero(rut);
+		return (t == null) ? false : t.eliminarPasajero(rut);
+		
+	}
+
+	public boolean eliminarTaxi(String patente) {
+		Taxi t = buscarTaxi(patente);
+		if (t != null) {
+			taxis.eliminar(t);
 			return true;
 		}
 		return false;
-	}
-
-	public boolean setTaxistaTaxi(Rut rut, String patente) {
-		Taxista nuevo = buscarTaxista(rut);
-		Taxi t = buscarTaxi(patente);
-		if (t == null)
-			return false;
-
-		t.setTaxista(nuevo);
-		return true;
-
 	}
 
 	public boolean eliminarTaxista(Rut r) {
@@ -131,21 +153,8 @@ public class Flota {
 		return false; // en caso de que no exista el taxista
 	}
 
-	public Taxi buscarTaxiTaxista(Rut rut) {
-		if (rut == null)
-			return null;
-		for (Taxi t : taxis) {
-			if (t.getTaxista() != null && t.getTaxista().getRut().equals(rut))
-				return t;
-		}
-		return null;
-	}
-
-	public Taxista buscarTaxista(Rut rut) {
-		for (Taxista t : taxistas)
-			if (t.getRut().equals(rut))
-				return t;
-		return null;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public void listarParaderos(Lista<Paradero> lista) {
@@ -154,40 +163,31 @@ public class Flota {
 			lista.agregar(itr.next());
 	}
 
-	public boolean agregarParadero(Paradero p) {
-		if (p == null)
-			return false;
-		if (buscarParadero(p.getNombre()) == null) {
-			paraderos.agregar(p);
-			return true;
-		}
-		return false;
+	public void listarTaxis(Lista<Taxi> lista) {
+		for (Taxi t : taxis)
+			lista.agregar(t);
 	}
 
-	public boolean eliminarParadero(String nombre) {
-		Paradero p = buscarParadero(nombre);
-		if (p != null) {
-			paraderos.eliminar(p);
-			return true;
-		}
-		return false; // en caso de que no exista el paradero
-	}
-
-	public Paradero buscarParadero(String nombre) {
-		Paradero p;
-		for (ListIterator<Paradero> itr = paraderos.iteradorDoble(); itr
-				.hasNext();) {
-			p = itr.next();
-			if (p.getNombre().equals(nombre))
-				return p;
-		}
-		return null;
+	public void listarTaxista(Lista<Taxista> lista) {
+		for (Taxista t : taxistas)
+			lista.agregar(t);
 	}
 
 	public void modificarSueldo(int nuevoSueldo, Rut rut) {
 		Taxista t = buscarTaxista(rut);
 		if (t != null)
 			t.setSueldo(nuevoSueldo);
+
+	}
+
+	public boolean setTaxistaTaxi(Rut rut, String patente) {
+		Taxista nuevo = buscarTaxista(rut);
+		Taxi t = buscarTaxi(patente);
+		if (t == null)
+			return false;
+
+		t.setTaxista(nuevo);
+		return true;
 
 	}
 

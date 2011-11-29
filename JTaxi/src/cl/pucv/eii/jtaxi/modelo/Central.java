@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2011, Julio Jiménez, René Toro, José Vargas. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
  * This file is part of JTaxi.
@@ -19,16 +18,20 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import cl.pucv.eii.jtaxi.interfaces.Observable;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
-public class Central {
+public class Central implements Observable {
 
 	private String nombre;
 	private ListaDoble<Flota> flotas;
 	private ListaDoble<Sector> sectores;
+	private ArrayList<Observer> observers = new ArrayList<>();
 
 	public Central(String nombre) {
 		this.nombre = nombre;
@@ -39,113 +42,50 @@ public class Central {
 	public boolean agregarFlota(Flota f) {
 		if (f != null && buscarFlota(f.getNombre().toLowerCase()) == null) {
 			flotas.agregar(f);
+			notificarObservers("Flota");
 			return true;
 		}
 		return false;
 	}
 
-	public boolean eliminarFlota(String nombre) {
-		return flotas.eliminar(buscarFlota(nombre));
+	public boolean agregarParaderoSector(Paradero p, String sector) {
+		if (p == null)
+			return false;
+
+		for (Sector s : sectores)
+			if (s.buscarParadero(p.getNombre()) != null)
+				return false;
+
+		buscarSector(sector).agregarParadero(p);
+		return true;
 	}
 
-	/**
-	 * Retorna la flota que contiene al taxista con rut == rut.
-	 * 
-	 * @param rut
-	 * @return
-	 */
-	public Flota buscarFlotaTaxista(Rut rut) {
-		for (Flota f : flotas) {
-			if (f.buscarTaxista(rut) != null)
-				return f;
-		}
-		return null;
-	}
-
-	/**
-	 * Retorna la flota que contiene al Taxi con patente p.
-	 * 
-	 * @param rut
-	 * @return
-	 */
-	public Flota buscarFlotaTaxi(String p) {
-		for (Flota f : flotas) {
-			if (f.buscarTaxi(p) != null)
-				return f;
-		}
-		return null;
-	}
-
-	/**
-	 * Retorna la flota con nombre equivalente a nombre.
-	 * 
-	 * @param nombre
-	 * @return
-	 */
-	public Flota buscarFlota(String nombre) {
-		for (Flota f : flotas)
-			if (f.getNombre().equalsIgnoreCase(nombre))
-				return f;
-		return null;
-	}
-
-	public void listarFlotas(Lista<Flota> lista) {
-		for (Flota f : flotas)
-			lista.agregar(f);
+	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
+		if(pasajero == null || patente == null)
+			return false;
+		
+		for(Flota f: flotas)
+			if(f.buscarTaxiPasajero(pasajero.getRut()) != null)
+				return false;
+		
+		Flota f = buscarFlotaTaxi(patente);
+		if (f == null)
+			return false;
+		return f.agregarPasajeroTaxi(pasajero, patente);
 	}
 
 	public boolean agregarSector(Sector s) {
 		if (s != null && buscarSector(s.getNombre().toLowerCase()) == null) {
 			sectores.agregar(s);
+			notificarObservers("Sector");
 			return true;
 		}
 		return false;
 	}
 
-	public boolean eliminarSector(String nombre) {
-		ListaDoble<Paradero> paraderos = new ListaDoble<>();
-		Sector s = buscarSector(nombre);
-
-		if (s == null)
-			return false;
-		s.listarParaderos(paraderos);
-
-		for (Paradero p : paraderos)
-			for (Flota f : flotas)
-				f.eliminarParadero(p.getNombre());
-
-		return sectores.eliminar(s);
-	}
-
-	public Sector buscarSector(String nombre) {
-		for (Sector s : sectores)
-			if (s.getNombre().equalsIgnoreCase(nombre))
-				return s;
-		return null; // en caso que no existe el sector con nombre n
-	}
-
-	public Sector buscarSector(Paradero p) {
-		if (p == null)
-			return null;
-		for (Sector s : sectores)
-			if (s.buscarParadero(p.getNombre()) != null)
-				return s;
-		return null;
-	}
-
-	public void listarSectores(Lista<Sector> lista) {
-		for (Sector s : sectores)
-			lista.agregar(s);
-	}
-
-	public Paradero buscarParadero(String nombre) {
-		Paradero p;
-		for (Sector s : sectores) {
-			p = s.buscarParadero(nombre);
-			if (p != null)
-				return p;
-		}
-		return null;
+	public boolean agregarTaxiFlota(Taxi taxi, Flota flota){
+		if(flota == null) return false;
+		return agregarTaxiFlota(taxi, flota.getNombre());
 	}
 
 	public boolean agregarTaxiFlota(Taxi taxi, String flota) {
@@ -162,69 +102,6 @@ public class Central {
 		
 		return false;
 
-	}
-	
-	public boolean agregarTaxiFlota(Taxi taxi, Flota flota){
-		if(flota == null) return false;
-		return agregarTaxiFlota(taxi, flota.getNombre());
-	}
-	
-	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
-		if(pasajero == null || patente == null)
-			return false;
-		
-		for(Flota f: flotas)
-			if(f.buscarTaxiPasajero(pasajero.getRut()) != null)
-				return false;
-		
-		Flota f = buscarFlotaTaxi(patente);
-		if (f == null)
-			return false;
-		return f.agregarPasajeroTaxi(pasajero, patente);
-	}
-	
-	public boolean eliminarRut(Rut r){
-		return (eliminarTaxista(r) || eliminarPasajero(r));
-	}
-	
-	public boolean eliminarPasajero(Rut r){
-		for (Flota f: flotas)
-				if (f.eliminarPasajero(r))
-					return true;
-		return false;
-	}
-
-	public boolean agregarParaderoSector(Paradero p, String sector) {
-		if (p == null)
-			return false;
-
-		for (Sector s : sectores)
-			if (s.buscarParadero(p.getNombre()) != null)
-				return false;
-
-		buscarSector(sector).agregarParadero(p);
-		return true;
-	}
-
-	public boolean eliminarParadero(String nombre) {
-		boolean encontrado = false;
-		for (Iterator<Sector> itr = sectores.iterator(); !encontrado
-				&& itr.hasNext();) {
-			encontrado = itr.next().eliminarParadero(nombre);
-		}
-		if (!encontrado)
-			return false;
-		for (Flota f : flotas) {
-			f.eliminarParadero(nombre);
-		}
-		return true;
-	}
-
-	public boolean eliminarTaxista(Rut rut) {
-		Flota f = buscarFlotaTaxista(rut);
-		if (f == null)
-			return false;
-		return f.eliminarTaxista(rut);
 	}
 
 	public boolean agregarTaxistaFlota(Taxista nuevo, Flota flota) {
@@ -250,6 +127,125 @@ public class Central {
 		return f.setTaxistaTaxi(rut, patente);
 	}
 
+	/**
+	 * Retorna la flota con nombre equivalente a nombre.
+	 * 
+	 * @param nombre
+	 * @return
+	 */
+	public Flota buscarFlota(String nombre) {
+		for (Flota f : flotas)
+			if (f.getNombre().equalsIgnoreCase(nombre))
+				return f;
+		return null;
+	}
+
+	/**
+	 * Retorna la flota que contiene al Taxi con patente p.
+	 * 
+	 * @param rut
+	 * @return
+	 */
+	public Flota buscarFlotaTaxi(String p) {
+		for (Flota f : flotas) {
+			if (f.buscarTaxi(p) != null)
+				return f;
+		}
+		return null;
+	}
+
+	/**
+	 * Retorna la flota que contiene al taxista con rut == rut.
+	 * 
+	 * @param rut
+	 * @return
+	 */
+	public Flota buscarFlotaTaxista(Rut rut) {
+		for (Flota f : flotas) {
+			if (f.buscarTaxista(rut) != null)
+				return f;
+		}
+		return null;
+	}
+
+	public Paradero buscarParadero(String nombre) {
+		Paradero p;
+		for (Sector s : sectores) {
+			p = s.buscarParadero(nombre);
+			if (p != null)
+				return p;
+		}
+		return null;
+	}
+
+	public Sector buscarSector(Paradero p) {
+		if (p == null)
+			return null;
+		for (Sector s : sectores)
+			if (s.buscarParadero(p.getNombre()) != null)
+				return s;
+		return null;
+	}
+	
+	public Sector buscarSector(String nombre) {
+		for (Sector s : sectores)
+			if (s.getNombre().equalsIgnoreCase(nombre))
+				return s;
+		return null; // en caso que no existe el sector con nombre n
+	}
+	
+	public boolean eliminarFlota(String nombre) {
+		if( flotas.eliminar(buscarFlota(nombre)) ){
+			notificarObservers("Flota");
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean eliminarParadero(String nombre) {
+		boolean encontrado = false;
+		for (Iterator<Sector> itr = sectores.iterator(); !encontrado
+				&& itr.hasNext();) {
+			encontrado = itr.next().eliminarParadero(nombre);
+		}
+		if (!encontrado)
+			return false;
+		for (Flota f : flotas) {
+			f.eliminarParadero(nombre);
+		}
+		return true;
+	}
+	
+	public boolean eliminarPasajero(Rut r){
+		for (Flota f: flotas)
+				if (f.eliminarPasajero(r))
+					return true;
+		return false;
+	}
+
+	public boolean eliminarRut(Rut r){
+		return (eliminarTaxista(r) || eliminarPasajero(r));
+	}
+
+	public boolean eliminarSector(String nombre) {
+		ListaDoble<Paradero> paraderos = new ListaDoble<>();
+		Sector s = buscarSector(nombre);
+
+		if (s == null)
+			return false;
+		s.listarParaderos(paraderos);
+
+		for (Paradero p : paraderos)
+			for (Flota f : flotas)
+				f.eliminarParadero(p.getNombre());
+
+		if(sectores.eliminar(s)){
+			notificarObservers("Sector");
+			return true;
+		}
+		return false;
+	}
+
 	public boolean eliminarTaxi(String patente) {
 		Flota f = buscarFlotaTaxi(patente);
 		if (f == null)
@@ -258,10 +254,35 @@ public class Central {
 		f.eliminarTaxi(patente);
 		return true;
 	}
-	
+
+	public boolean eliminarTaxista(Rut rut) {
+		Flota f = buscarFlotaTaxista(rut);
+		if (f == null)
+			return false;
+		return f.eliminarTaxista(rut);
+	}
+
+	public Lista<Flota> getFlotas() {
+		return this.flotas;
+	}
 
 	public String getNombre() {
 		return nombre;
+	}
+	
+
+	public Lista<Sector> getSectores() {
+		return this.sectores;
+	}
+
+	public void listarFlotas(Lista<Flota> lista) {
+		for (Flota f : flotas)
+			lista.agregar(f);
+	}
+
+	public void listarSectores(Lista<Sector> lista) {
+		for (Sector s : sectores)
+			lista.agregar(s);
 	}
 
 	@Override
@@ -269,11 +290,20 @@ public class Central {
 		return nombre;
 	}
 
-	public Lista<Sector> getSectores() {
-		return this.sectores;
+	@Override
+	public void agregarObserver(Observer o) {
+		if(!observers.contains(o))
+			observers.add(o);
 	}
 
-	public Lista<Flota> getFlotas() {
-		return this.flotas;
+	@Override
+	public void eliminarObserver(Observer o) {
+		observers.remove(o);
+	}
+
+	@Override
+	public void notificarObservers(String estructura) {
+		for(Observer o : observers)
+			o.actualizar(estructura);
 	}
 }

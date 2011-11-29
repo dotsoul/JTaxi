@@ -22,26 +22,31 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 import javax.swing.table.AbstractTableModel;
 
 import cl.pucv.eii.jtaxi.gui.ListaContadora;
+import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
+import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 @SuppressWarnings("serial")
-public class SectorTableModel extends AbstractTableModel {
+public class SectorTableModel extends AbstractTableModel implements Observer {
 
 	private Lista<Sector> sectores;
-	
-	public SectorTableModel (Central central){
-		this.sectores = central.getSectores();
+	private Central central;
+
+	public SectorTableModel(Central central) {
+		central.agregarObserver(this);
+		this.central = central;
+		reloadLista();
 	}
-	
+
 	@Override
-	public String getColumnName(int columnIndex){
-		String[] columnName = {"Nombre", "Nº Paraderos"};
+	public String getColumnName(int columnIndex) {
+		String[] columnName = { "Nombre", "Nº Paraderos" };
 		return columnName[columnIndex];
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return 2;
@@ -57,8 +62,19 @@ public class SectorTableModel extends AbstractTableModel {
 		Sector item = sectores.getObject(rowIndex);
 		ListaContadora<Paradero> nParaderos = new ListaContadora<>();
 		item.listarParaderos(nParaderos);
-		Object[] aux = {item.getNombre(),new Integer(nParaderos.tamaño())};
+		Object[] aux = { item.getNombre(), new Integer(nParaderos.tamaño()) };
 		return aux[columnIndex];
+	}
+
+	private void reloadLista() {
+		sectores = new ListaDoble<>();
+		central.listarSectores(sectores);
+	}
+
+	@Override
+	public void actualizar(String cambio) {
+		if (cambio == "Sector")
+			reloadLista();
 	}
 
 }
