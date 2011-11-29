@@ -22,6 +22,7 @@ package cl.pucv.eii.jtaxi.gui.tablemodels;
 import javax.swing.table.AbstractTableModel;
 
 import cl.pucv.eii.jtaxi.gui.ListaContadora;
+import cl.pucv.eii.jtaxi.interfaces.Observable;
 import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
@@ -36,8 +37,8 @@ public class FlotaTableModel extends AbstractTableModel implements Observer{
 	private ListaDoble<Flota> flotas;
 	private Central central;
 	
-	public FlotaTableModel (Central central){
-		central.agregarObserver(this);
+	public FlotaTableModel (Observable o, Central central){
+		o.agregarObserver(this);
 		this.central = central;
 		reloadLista();
 	}

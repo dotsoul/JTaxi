@@ -96,7 +96,7 @@ public class Inspector extends JDialog implements ActionListener {
 
 		ListaDoble<Flota> flotas = new ListaDoble<>();
 		central.listarFlotas(flotas);
-		FlotaTableModel fModel = new FlotaTableModel(central);
+		FlotaTableModel fModel = new FlotaTableModel(central,central);
 
 		tabla.setModel(fModel);
 		tabla.getTableHeader().setReorderingAllowed(false);
@@ -229,7 +229,7 @@ public class Inspector extends JDialog implements ActionListener {
 		AbstractTableModel[] modelos = new AbstractTableModel[] {
 				new SectorTableModel(central),
 				new ParaderoTableModel(central),
-				new FlotaTableModel(central),
+				new FlotaTableModel(central,central),
 				new TaxiTableModel(central),
 				new TaxistaTableModel(central),
 				new PasajeroTableModel(central),
