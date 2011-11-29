@@ -22,7 +22,6 @@ package cl.pucv.eii.jtaxi.utilidades.rut;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
 /**
  * 
  * @author Julio

@@ -23,8 +23,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
 import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
+import cl.pucv.eii.jtaxi.utilidades.rut.RutInvalidoException;
 
 public class RutTest {
 

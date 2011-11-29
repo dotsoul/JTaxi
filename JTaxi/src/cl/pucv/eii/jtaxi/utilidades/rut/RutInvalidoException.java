@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cl.pucv.eii.jtaxi.modelo;
+package cl.pucv.eii.jtaxi.utilidades.rut;
 
 @SuppressWarnings("serial")
 public class RutInvalidoException extends Exception {

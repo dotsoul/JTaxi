@@ -19,79 +19,144 @@
  */
 package cl.pucv.eii.jtaxi.utilidades.rut;
 
-import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
 
 /**
- * La clase Rut representa al Rol único tributario utilizado para identificar personas en Chile.
+ * La clase Rut representa al Rol único tributario utilizado para identificar
+ * personas en Chile.
  * 
- * TODO Implementar patrón Strategy en toString() y fromString()
- *
+ * Podría ser más genérica, pero en este caso para simplificar el diseño se
+ * decidió dejarla solamente para personas naturales, por lo que solo pueden
+ * crearse Ruts que comienzen en 1.000.000 hasta 72.000.000 excluyendo el
+ * último.
  */
 public final class Rut {
-	private int rut;
+	private int número;
 	private char dv;
-	private static final char[] digitosVerificadores = { '1', '2', '3', '4','5', '6', '7', '8', '9', '0', 'K' };
+	private static final char[] digitosVerificadores = { '1', '2', '3', '4',
+			'5', '6', '7', '8', '9', '0', 'K' };
 	private FormatoRut formato;
-	
-	public Rut(int rut, char dv) throws RutInvalidoException {
+
+	/**
+	 * Crea un Rut con los datos recibidos por parámetro.
+	 * 
+	 * @param número
+	 *            rut número de rut
+	 * @param dv
+	 *            digito verificador
+	 * @throws RutInvalidoException
+	 *             si el digito verificador es un valor inválido, el número no corresponde a
+	 *             persona natural,número no conincide con el digito
+	 *             verificador correspondiente
+	 */
+	public Rut(int número, char dv) throws RutInvalidoException {
 		char dv_m = Character.toUpperCase(dv);
 		if (!dvEsValido(dv))
-			throw new RutInvalidoException("Digito verificador contiene caracteres inválidos.");
-		if (rut >= 72000000 || rut < 100000)
-			throw new RutInvalidoException("Rut debe estar estar en el intervalo [1.000.000,72.000.000[");
-		if (generarDV(rut) != dv)
-			throw new RutInvalidoException("El RUT ingresado no coincide con su digito verificador.");
-		this.rut = rut;
+			throw new RutInvalidoException(
+					"Digito verificador contiene caracteres inválidos.");
+		if (número >= 72000000 || número < 100000)
+			throw new RutInvalidoException(
+					"Número de Rut debe estar estar en el intervalo [1.000.000,72.000.000[");
+		if (generarDV(número) != dv)
+			throw new RutInvalidoException(
+					"El RUT ingresado no coincide con su digito verificador.");
+		this.número = número;
 		this.dv = dv_m;
 		formato = new FormatoDefault();
 	}
-	
-	public void setFormato(FormatoRut formato){
+
+	/**
+	 * Setea el formato de entrada y salida de toString y fromString
+	 * 
+	 * @param formato
+	 *            clase que implemente la interfaz FormatoRut
+	 */
+	public void setFormato(FormatoRut formato) {
 		this.formato = formato;
 	}
 
+	/**
+	 * Retorna el número de rut
+	 * 
+	 * @return rut número de rut
+	 */
 	public long getNumero() {
-		return rut;
+		return número;
 	}
 
+	/**
+	 * Retorna el digito verificador
+	 * 
+	 * @return digito verificador
+	 */
 	public char getDV() {
 		return dv;
 	}
-	
+
 	@Override
-	public String toString(){
+	/**
+	 * Retorna un string que representa al rut de acuerdo al formato configurado.
+	 */
+	public String toString() {
 		return formato.toString(this);
 	}
-	
-	public String toString(FormatoRut formato){
+
+	/**
+	 * Retorna un string que representa al rut segun el formato recibido por
+	 * parametro
+	 * 
+	 * @param formato
+	 * @return clase que implemente la interfaz FormatoRut
+	 */
+	public String toString(FormatoRut formato) {
 		return formato.toString(this);
 	}
-	
-	public static Rut fromString(String rut){
+
+	/**
+	 * Crea un objeto Rut a partir de un String recibido por parámetro y que
+	 * cumpla con el formato por defecto.
+	 * 
+	 * @param rut
+	 *            string que cumpla con el formato por defecto
+	 * @return rut Objeto rut creado
+	 */
+	public static Rut fromString(String rut) {
 		return new FormatoDefault().fromString(rut);
 	}
-	
-	public static Rut fromString(String rut, FormatoRut formato){
+
+	/**
+	 * Crea un objeto Rut a partir de un String recibido por parámetro y que
+	 * cumpla con el FormatoRut recibido también por parámetro.
+	 * 
+	 * @param rut
+	 *            string que cumpla con formato
+	 * @param formato
+	 *            Objeto FormatoRut
+	 * @return Objeto rut creado
+	 */
+	public static Rut fromString(String rut, FormatoRut formato) {
 		return formato.fromString(rut);
 	}
 
 	/**
 	 * Genera un digito verificador valido para el rut recibido por parametro.
-	 * @param entero entre 1.000.000 y 72.000.000
+	 * Implementa el algoritmo del módulo 11 basado en la información que aparece en:
+	 * http://es.wikipedia.org/wiki/Rol_%C3%9Anico_Tributario
+	 * @param entero
+	 *            entre 1.000.000 y 72.000.000
 	 * @return char con el db generado para ese rut
 	 */
-	public static char generarDV(int rut) {
-		if (rut >= 72000000 || rut < 100000)
+	public static char generarDV(int número) {
+		if (número >= 72000000 || número < 100000)
 			throw new IllegalArgumentException();
 		char dv;
 		int suma = 0;
 		int i = 2;
-		for(; rut != 0; rut /= 10){
-			suma += (rut % 10)*i;
-			i = (i == 7) ? 2 : i+1;
+		for (; número != 0; número /= 10) {
+			suma += (número % 10) * i;
+			i = (i == 7) ? 2 : i + 1;
 		}
 		i = 11 - (suma % 11);
-		
+
 		if (i == 11)
 			dv = '0';
 		else if (i == 10)
@@ -103,7 +168,9 @@ public final class Rut {
 
 	/**
 	 * Comprueba que el caracter recibido por parametro sea uno valido
-	 * @param dv digito verificador
+	 * 
+	 * @param dv
+	 *            digito verificador
 	 * @return true si el digito verificador toma un valor válido
 	 */
 	public static boolean dvEsValido(char dv) {
@@ -113,13 +180,19 @@ public final class Rut {
 				return true;
 		return false;
 	}
-	
 
+	/**
+	 * Sobreescrito de Object.
+	 */
 	@Override
 	public int hashCode() {
-		return rut;
+		return número;
 	}
 
+	/**
+	 * Retorna true, segun la especificación del contrato de la clase Object y
+	 * si el rut es igual en ambos objetos.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -128,9 +201,9 @@ public final class Rut {
 			return false;
 		if (getClass() != o.getClass())
 			return false;
-		if (rut != ((Rut)o).rut)
+		if (número != ((Rut) o).número)
 			return false;
 		return true;
 	}
-	
+
 }

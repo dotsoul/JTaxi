@@ -47,12 +47,12 @@ import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Pasajero;
-import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
 import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
+import cl.pucv.eii.jtaxi.utilidades.rut.RutInvalidoException;
 
 @SuppressWarnings("serial")
 public class Inspector extends JDialog implements ActionListener {
