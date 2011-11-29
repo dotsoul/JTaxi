@@ -19,10 +19,32 @@
  */
 package cl.pucv.eii.jtaxi.interfaces;
 
+/**
+ * 
+ * Implementación sencilla del patrón Observer.
+ * Esta interfaz representa la capacidad que tiene un objeto de ser observado
+ * por una lista de Observers previamente registrados.
+ * En este casoespecífico al problema que resuelve el implementar este patrón
+ * en el proyecto, notificarObservers además entregar un string que representa
+ * que clase de estructura se modificó.
+ *
+ */
 public interface Observable {
 
+	/**
+	 * Agregar al Observer o a la lista de observadores para ser notificado de cambios.
+	 * @param o Observer a agregar.
+	 */
 	public void agregarObserver(Observer o);
+	/**
+	 * Elimina el Observer o de la lista de observadores, ya no será notificado de cambios.
+	 * @param o Observer a eliminar.
+	 */
 	public void eliminarObserver(Observer o);
+	/**
+	 * Envía a todos los Observer en la lista de observadores de un cambio en la estructura.
+	 * @param estructura nombre de la estructura que fué modificada.
+	 */
 	public void notificarObservers(String estructura);
 	
 }

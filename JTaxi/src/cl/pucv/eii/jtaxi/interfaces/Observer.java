@@ -19,8 +19,18 @@
  */
 package cl.pucv.eii.jtaxi.interfaces;
 
+/**
+ * Implementación sencilla del patrón Observer
+ * Al implementar esta interfaz, la clase puede ser notificada de cambios
+ * en objetos observables.
+ */
 public interface Observer {
 
-	public void actualizar(String cambio);
+	/**
+	 * El objeto observado llama a este método para notificar una modificación en
+	 * la estructura recibida por parámetro.
+	 * @param estructura nombre de la estructura modificada
+	 */
+	public void actualizar(String estructura);
 	
 }
