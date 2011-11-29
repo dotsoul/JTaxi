@@ -42,7 +42,7 @@ public class Dirección {
 	
 	@Override
 	public String toString(){
-		return calle+ " "+numero;
+		return calle+" "+numero;
 	}
 
 }
