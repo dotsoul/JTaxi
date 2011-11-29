@@ -74,7 +74,7 @@ public class FlotaTableModel extends AbstractTableModel implements Observer{
 
 	@Override
 	public void actualizar(String cambio) {
-		if("Flota".equals(cambio))
+		if("Flota".equals(cambio) || "Paradero".equals(cambio))
 			reloadLista();
 	}
 	

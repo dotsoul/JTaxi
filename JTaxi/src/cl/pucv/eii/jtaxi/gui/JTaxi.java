@@ -38,7 +38,7 @@ public class JTaxi extends JFrame implements ActionListener{
 	private Central central;
 	private JLabel centralLabel = new JLabel();
 	private JButton tomarOrdenBoton = new JButton("Tomar orden...");
-	private JButton funcion2Boton = new JButton("Funcionalidad 2");
+	private JButton sueldoBoton = new JButton("Calcular Sueldo");
 	private JButton manipularBoton = new JButton("Manipular Estructuras");
 	private JSeparator separador1 = new JSeparator();
 	private ListaDoble<Rut> rutsTemporales = new ListaDoble<>();
@@ -70,7 +70,7 @@ public class JTaxi extends JFrame implements ActionListener{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tomarOrdenBoton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(funcion2Boton, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(sueldoBoton, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                     .addComponent(manipularBoton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -84,7 +84,7 @@ public class JTaxi extends JFrame implements ActionListener{
                 .addGap(18, 18, 18)
                 .addComponent(tomarOrdenBoton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(funcion2Boton)
+                .addComponent(sueldoBoton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manipularBoton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
