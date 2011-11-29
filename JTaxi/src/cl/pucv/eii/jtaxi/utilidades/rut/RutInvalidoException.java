@@ -20,6 +20,10 @@
 package cl.pucv.eii.jtaxi.utilidades.rut;
 
 @SuppressWarnings("serial")
+/**
+ * 
+ *
+ */
 public class RutInvalidoException extends Exception {
 
 	public RutInvalidoException() {super();}

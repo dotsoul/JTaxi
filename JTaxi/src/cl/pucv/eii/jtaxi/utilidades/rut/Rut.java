@@ -32,8 +32,6 @@ package cl.pucv.eii.jtaxi.utilidades.rut;
 public final class Rut {
 	private int número;
 	private char dv;
-	private static final char[] digitosVerificadores = { '1', '2', '3', '4',
-			'5', '6', '7', '8', '9', '0', 'K' };
 	private FormatoRut formato;
 
 	/**
@@ -147,7 +145,7 @@ public final class Rut {
 	 */
 	public static char generarDV(int número) {
 		if (número >= 72000000 || número < 100000)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Número de Rut debe estar estar en el intervalo [1.000.000,72.000.000[");
 		char dv;
 		int suma = 0;
 		int i = 2;
@@ -174,11 +172,11 @@ public final class Rut {
 	 * @return true si el digito verificador toma un valor válido
 	 */
 	public static boolean dvEsValido(char dv) {
-		char dv_m = Character.toUpperCase(dv);
-		for (char d : digitosVerificadores)
-			if (dv_m == d)
-				return true;
-		return false;
+		/*
+		 * Un poco hackish, pero en la carpeta test, package rut.dvesvalido hay un microbenchmark que muestra que esta
+		 * es la opcion mas rapida a la larga para realizar la verificacion.
+		 */
+			return (((int)dv >= 48 && (int)dv <= 57) || 'k' == dv || 'K' == dv);
 	}
 
 	/**

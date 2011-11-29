@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
 import cl.pucv.eii.jtaxi.modelo.*;
@@ -48,6 +49,8 @@ public class JTaxi extends JFrame implements ActionListener{
 	
 	private void initComponents(){
 		
+		tomarOrdenBoton.setActionCommand("tomarOrden");
+		tomarOrdenBoton.addActionListener(this);
 		manipularBoton.setActionCommand("manipular");
 		manipularBoton.addActionListener(this);
 		centralLabel.setText("Central: "+central.getNombre());
@@ -108,8 +111,78 @@ public class JTaxi extends JFrame implements ActionListener{
 		case "manipular":
 			mostrarInspector();
 			break;
+		case "tomarOrden":
+			tomarOrden();
+			break;
 		}
 		
+	}
+
+	private void tomarOrden() {
+		
+	}
+	
+	private int pedirInt(String mensaje, int min) {
+		String input;
+		int n = -1;
+		boolean valido = false;
+		while (!valido) {
+			input = pedirString(mensaje);
+			try {
+				n = Integer.parseInt(input);
+				if (n > min) {
+					valido = true;
+				} else {
+					mostrarDialogoError("Debe ser mayor que " + min);
+				}
+			} catch (NumberFormatException e) {
+				mostrarDialogoError("Debe ingresar un número");
+			}
+
+		}
+
+		return n;
+	}
+
+	private void mostrarDialogoError(String mensaje) {
+		JOptionPane.showMessageDialog(this, mensaje, "Error",
+				JOptionPane.ERROR_MESSAGE);
+	}
+
+	private String pedirString(String mensaje) {
+		String input = null;
+		boolean valido = false;
+		while (!valido) {
+			input = JOptionPane.showInputDialog(this, mensaje,
+					"Ingresar datos", JOptionPane.QUESTION_MESSAGE);
+			if (input != null) {
+				if (input.trim().length() > 0 && !input.matches("[\u00A0]+")) {
+					valido = true;
+				} else {
+					JOptionPane.showMessageDialog(this,
+							"No puede ingresar datos vacios.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		}
+		return input;
+	}
+
+	private Rut pedirRut(String mensaje) {
+		boolean valido = false;
+		String input = null;
+		Rut r = null;
+		while (!valido) {
+			input = pedirString(mensaje);
+			r = Rut.fromString(input);
+			if (r != null)
+				return r;
+			else
+				mostrarDialogoError("Ha ingresado un rut no válido o con un formato distinto a: X.XXX.XXX-X o: XX.XXX.XXX-X.");
+		}
+
+		return null;
 	}
 	
 }

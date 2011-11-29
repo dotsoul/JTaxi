@@ -22,7 +22,7 @@ package rut.dvesvalido;
 public class ConChar {
 
 	public static boolean dvEsValido(char dv){
-			return ('k' == dv || 'K' == dv || ((int)dv >= 48 && (int)dv <= 57) );
+			return (((int)dv >= 48 && (int)dv <= 57) || 'k' == dv || 'K' == dv);
 	}
 	
 }
