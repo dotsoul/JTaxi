@@ -23,7 +23,8 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class ListaDoble<K> implements Lista<K>, Iterable<K> {
+
+public class ListaDoble<K> implements Lista<K> {
 
 	private NodoDoble<K> head;
 	private NodoDoble<K> tail;

@@ -19,19 +19,21 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
+import java.util.Iterator;
+
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
-import cl.pucv.eii.jtaxi.utilidades.listas.ListaSimple;
+import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
 public class Central {
 	
     private String nombre;
-    private ListaSimple<Flota> flotas;
-    private ListaSimple<Sector> sectores;
+    private ListaDoble<Flota> flotas;
+    private ListaDoble<Sector> sectores;
 
     public Central(String nombre){
         this.nombre = nombre;
-        flotas = new ListaSimple<Flota>();
-        sectores = new ListaSimple<Sector>();
+        flotas = new ListaDoble<Flota>();
+        sectores = new ListaDoble<Sector>();
     }
     
     public boolean agregarFlota(Flota f){
@@ -97,7 +99,17 @@ public class Central {
         return false;
     }
     public boolean eliminarSector(String nombre){
-        return sectores.eliminar(buscarSector(nombre));
+    	ListaDoble<Paradero> paraderos = new ListaDoble<>();
+    	Sector s = buscarSector(nombre);
+    	
+    	if(s == null) return false;
+    	s.listarParaderos(paraderos);
+    	
+    	for(Paradero p: paraderos)
+    		for(Flota f: flotas)
+    			f.eliminarParadero(p.getNombre());
+    	
+        return sectores.eliminar(s);
     }
     
     public Sector buscarSector(String nombre){
@@ -128,12 +140,56 @@ public class Central {
     	}
     	return null;
     }
+    
+    public boolean agregarParaderoSector(Paradero p, String sector){
+    	if (p == null) return false;
+    	
+    	for(Sector s: sectores)
+    		if (s.buscarParadero(p.getNombre()) != null)
+    			return false;
+    	
+    	buscarSector(sector).agregarParadero(p);
+    	return true;
+    }
+    
+    public boolean eliminarParadero(String nombre){
+    	boolean encontrado = false;
+    	for(Iterator<Sector> itr = sectores.iterator(); !encontrado && itr.hasNext();){
+    		encontrado = itr.next().eliminarParadero(nombre);
+    	}
+    	if(!encontrado) return false;
+    	for(Flota f: flotas){
+    		f.eliminarParadero(nombre);
+    	}
+    	return true;
+    }
 
     public boolean eliminarTaxista(Rut rut){
     	Flota f = buscarFlotaTaxista(rut);
     	if (f == null)
     		return false;
     	return f.eliminarTaxista(rut);
+    }
+    
+    public boolean agregarTaxistaFlota(Taxista nuevo, Flota flota){
+    	if (nuevo == null) return false;
+    	Flota f = buscarFlotaTaxista(nuevo.getRut());
+    	
+    	if(f != null)
+    		return false;
+    	
+    	return flota.agregarTaxista(nuevo);
+    }
+    
+    public boolean agregarTaxistaTaxi(String patente, Rut rut){
+    	if(patente == null || rut == null) return false;
+    	Flota f = buscarFlotaTaxista(rut);
+    	Flota y = buscarFlotaTaxi(patente);
+    	
+    	if (f == null || y == null || f != y)
+    		return false;
+    	    	
+    	return f.setTaxistaTaxi(rut, patente);
     }
     
     public String getNombre(){
@@ -144,5 +200,12 @@ public class Central {
 	public String toString() {
 		return nombre;
 	}
-
+	
+	public Lista<Sector> getSectores(){
+		return this.sectores;
+	}
+	
+	public Lista<Flota> getFlotas(){
+		return this.flotas;
+	}
 }

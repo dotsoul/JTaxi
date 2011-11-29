@@ -24,12 +24,11 @@ import java.util.ListIterator;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaCircular;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
-import cl.pucv.eii.jtaxi.utilidades.listas.ListaSimple;
 
 public class Flota {
 
 	private String nombre;
-	private ListaSimple<Taxista> taxistas = new ListaSimple<>();
+	private ListaDoble<Taxista> taxistas = new ListaDoble<>();
 	private ListaCircular<Paradero> paraderos = new ListaCircular<>();
 	private ListaDoble<Taxi> taxis = new ListaDoble<>();
 
@@ -84,6 +83,17 @@ public class Flota {
 		}
 		return false;
 	}
+	
+	public boolean setTaxistaTaxi(Rut rut, String patente) {
+		Taxista nuevo = buscarTaxista(rut);
+		Taxi t = buscarTaxi(patente);
+		if(t == null) 
+			return false;
+		
+		t.setTaxista(nuevo);
+		return true;
+
+	}
 
 	public boolean eliminarTaxista(Rut r) {
 		Taxista t = buscarTaxista(r);
@@ -92,6 +102,15 @@ public class Flota {
 			return true;
 		}
 		return false; // en caso de que no exista el taxista
+	}
+	
+	public Taxi buscarTaxiTaxista(Rut rut){
+		if(rut == null) return null;
+		for (Taxi t: taxis){
+			if(t.getTaxista() != null && t.getTaxista().getRut().equals(rut))
+				return t;
+		}
+		return null;
 	}
 
 	public Taxista buscarTaxista(Rut rut) {

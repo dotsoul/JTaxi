@@ -24,7 +24,7 @@ package cl.pucv.eii.jtaxi.utilidades.listas;
  * @author Julio
  * 
  */
-public interface Lista<K> {
+public interface Lista<K> extends Iterable<K> {
 
 	/**
 	 * Agrega item en la última posición de la lista
@@ -104,5 +104,5 @@ public interface Lista<K> {
 	 * @return true si la lista no tiene elementos.
 	 */
 	public boolean estaVacia();
-
+	
 }
