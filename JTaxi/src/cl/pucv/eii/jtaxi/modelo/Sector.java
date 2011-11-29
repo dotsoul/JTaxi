@@ -49,6 +49,9 @@ public class Sector {
 	public boolean agregarParadero(Paradero p) {
 		if (p == null)
 			return false;
+		
+		if(buscarParadero(p.getDireccion()) != null)
+			return false;
 
 		if (buscarParadero(p.getNombre()) == null) {
 			paraderos.agregar(p);
@@ -71,6 +74,21 @@ public class Sector {
 
 	public boolean eliminarParadero(String nombre) {
 		return paraderos.eliminar( buscarParadero(nombre) );
+	}
+	
+	public boolean eliminarParaderoDirección(String dirección){
+		return paraderos.eliminar(buscarParadero(dirección));
+	}
+	
+	public Paradero buscarParaderoDirección(String dirección){
+		if (dirección == null)
+			return null;
+		
+		for(Paradero p : paraderos){
+			if(p.getDireccion().equals(dirección))
+				return p;
+		}
+		return null;
 	}
 
 }

@@ -55,9 +55,9 @@ public class Taxi {
     	nPasajeros++;
     }
 
-    public Dirección siguienteParada(){
+    public String siguienteParada(){
     	if(estaOcupado()){
-    		Dirección d = pasajeros[nPasajeros-1].getDestino();
+    		String d = pasajeros[nPasajeros-1].getDestino();
     		nPasajeros--;
     		return d;
     	} else {
@@ -102,6 +102,24 @@ public class Taxi {
     public void listarPasajeros(Lista<Pasajero> lista){
     	for(int i = 1;i<=nPasajeros;i++)
     		lista.agregar(pasajeros[i-1]);
+    }
+    
+    public boolean eliminarPasajero(Rut r){
+    	for(int i=1;i<=nPasajeros;i++)
+    		if(pasajeros[i-1].getRut().equals(r)){
+    			pasajeros[i-1] = pasajeros[nPasajeros-1];
+    			nPasajeros--;
+    			return true;
+    		}
+    	return false;
+    }
+    
+    public boolean contienePasajero(Rut r){
+    	for(int i=1;i<=nPasajeros;i++)
+    		if(pasajeros[i-1].getRut().equals(r)){
+    			return true;
+    		}
+    	return false;
     }
     
 }

@@ -82,6 +82,7 @@ public class RutTest {
 		Rut y = Rut.fromString("7.019.147-4");
 		Rut z = Rut.fromString("a.654.999-K");
 		Rut w = Rut.fromString("01.654.999-K");
+		Rut o = Rut.fromString("");
 		assertEquals("17.915.551-6", x.toString());
 		assertEquals("7.019.147-4", y.toString());
 		assertNull(w);

@@ -21,23 +21,17 @@ package cl.pucv.eii.jtaxi.modelo;
 
 public class Pasajero extends Persona {
 
-    private Dirección destino;
+    private String destino;
     private int teléfono;
-    private Dirección domicilio;
 
-    public Pasajero(String nombre, Rut rut, Dirección destino,int teléfono, Dirección domicilio){
+    public Pasajero(String nombre, Rut rut, int teléfono, String destino){
         super(nombre, rut);
         this.destino = destino;
         this.teléfono=teléfono;
-        this.domicilio=domicilio;
     }
 
-    public Dirección getDestino() {
+    public String getDestino() {
         return destino;
-    }
-
-    public Dirección getDomicilio() {
-        return domicilio;
     }
 
     public int getTelefono() {

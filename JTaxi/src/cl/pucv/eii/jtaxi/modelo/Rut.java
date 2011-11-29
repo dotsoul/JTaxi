@@ -89,7 +89,6 @@ public class Rut {
 			dv = 'K';
 		else
 			dv = Character.forDigit(i, 10);
-		
 		return dv;
 	}
 

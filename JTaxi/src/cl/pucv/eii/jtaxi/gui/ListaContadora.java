@@ -17,32 +17,28 @@
  * You should have received a copy of the GNU General Public License
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cl.pucv.eii.jtaxi.modelo;
-/**
- * TODO Implementar Strategy en toString
- *
- */
-public class Dirección {
+package cl.pucv.eii.jtaxi.gui;
 
-	private String calle;
-	private int numero;
+import java.util.Iterator;
+
+import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
+
+/*
+ * Lista que solo mantiene cuantas veces se le han agregado elementos.
+ */
+public class ListaContadora<K> implements Lista<K>{
 	
-	public Dirección(String calle, int numero){
-		this.calle = calle;
-		this.numero = numero;
-	}
-	
-	public String getCalle(){
-		return calle;
-	}
-	
-	public int getNumero(){
-		return numero;
-	}
-	
-	@Override
-	public String toString(){
-		return calle+" "+numero;
-	}
+	private int contador;
+
+	public Iterator<K> iterator() {return null;}
+	public void agregar(Object item) {contador++;}
+	public void agregar(int indice, Object item) {contador++;}
+	public void agregarAlInicio(Object item) {contador++;}
+	public int getIndice(Object item) {	return -1;}
+	public K getObject(int i) {return null;}
+	public int tamaño() {return contador;}
+	public boolean estaVacia() {return contador == 0;}
+	public boolean eliminar(Object item) {return true;}
+	public K eliminar(int indice) {return null;}
 
 }

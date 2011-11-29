@@ -277,35 +277,35 @@ public class ListaDoble<K> implements Lista<K> {
 		private NodoDoble<K> anterior;
 		private NodoDoble<K> siguiente;
 		
-		NodoDoble(K item){
+		protected NodoDoble(K item){
 			this.item = item;
 			this.anterior = null;
 			this.siguiente = null;
 		}
 		
-		NodoDoble(K item, NodoDoble<K> anterior, NodoDoble<K> siguiente){
+		protected NodoDoble(K item, NodoDoble<K> anterior, NodoDoble<K> siguiente){
 			this.anterior = anterior;
 			this.siguiente = siguiente;
 			this.item = item;
 		}
 
-		NodoDoble<K> getAnterior() {
+		protected NodoDoble<K> getAnterior() {
 			return anterior;
 		}
 
-		void setAnterior(NodoDoble<K> anterior) {
+		protected void setAnterior(NodoDoble<K> anterior) {
 			this.anterior = anterior;
 		}
 
-		NodoDoble<K> getSiguiente() {
+		protected NodoDoble<K> getSiguiente() {
 			return siguiente;
 		}
 
-		void setSiguiente(NodoDoble<K> siguiente) {
+		protected void setSiguiente(NodoDoble<K> siguiente) {
 			this.siguiente = siguiente;
 		}
 
-		K getItem() {
+		protected K getItem() {
 			return item;
 		}
 		

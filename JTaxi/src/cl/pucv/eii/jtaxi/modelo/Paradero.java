@@ -22,9 +22,9 @@ package cl.pucv.eii.jtaxi.modelo;
 public class Paradero {
 
     private String nombre;
-    private Dirección direccion;
+    private String direccion;
 
-    public Paradero(String n, Dirección d){
+    public Paradero(String n, String d){
         nombre = n;
         direccion = d;
     } 
@@ -34,7 +34,7 @@ public class Paradero {
         return nombre;
     }
 
-    public Dirección getDireccion(){
+    public String getDireccion(){
         return direccion;
     }
     

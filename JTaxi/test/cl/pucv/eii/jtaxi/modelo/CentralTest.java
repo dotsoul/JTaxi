@@ -19,12 +19,24 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
-public class CapacidadExcedidaException extends RuntimeException {
+import static org.junit.Assert.*;
 
-	public CapacidadExcedidaException() {super();}
-	public CapacidadExcedidaException(String s) {
-		super(s);
+import org.junit.Test;
+
+import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
+
+public class CentralTest {
+
+	@Test
+	public void testListar() {
+		ListaDoble<Flota> lista = new ListaDoble<>();
+		Central c = new Central("asdf");
+		c.agregarFlota(new Flota("asdf"));
+		c.agregarFlota(new Flota("qwerty"));
+		c.listarFlotas(lista);
+		for(Flota f: lista){
+			System.out.println(f.getNombre());
+		}
 	}
-
 
 }
