@@ -40,6 +40,7 @@ public class TaxiTableModel extends AbstractTableModel implements Observer {
 	public TaxiTableModel (Observable o, Central central){
 		o.agregarObserver(this);
 		this.central = central;
+		updateLista();
 	}
 	
 	@Override

@@ -43,6 +43,7 @@ public class RutTableModel extends AbstractTableModel implements Observer {
 		o.agregarObserver(this);
 		this.central = central;
 		this.ruts = ruts;
+		updateLista();
 	}
 
 	@Override
