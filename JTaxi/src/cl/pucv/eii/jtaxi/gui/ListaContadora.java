@@ -23,11 +23,13 @@ import java.util.Iterator;
 
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 
-/*
- * Lista que solo mantiene cuantas veces se le han agregado elementos.
+/**
+ * Lista que cuenta cuantas veces se le han agregado elementos, no almacena datos.
+ *
+ * @param <K> Objetos a contar
  */
 public class ListaContadora<K> implements Lista<K>{
-	
+
 	private int contador;
 
 	public Iterator<K> iterator() {return null;}
@@ -38,7 +40,7 @@ public class ListaContadora<K> implements Lista<K>{
 	public K getObject(int i) {return null;}
 	public int tamaño() {return contador;}
 	public boolean estaVacia() {return contador == 0;}
-	public boolean eliminar(Object item) {return true;}
+	public boolean eliminar(Object item) {return false;}
 	public K eliminar(int indice) {return null;}
 
 }

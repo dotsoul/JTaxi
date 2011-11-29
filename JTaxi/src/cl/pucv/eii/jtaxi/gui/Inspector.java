@@ -67,6 +67,7 @@ public class Inspector extends JDialog implements ActionListener {
 	private JSeparator separador = new JSeparator();
 	private JTable tabla = new JTable();
 	private Central central;
+	private boolean dmc12 = false;
 	private ListaDoble<Rut> rutsTemporales;
 	private HashMap<String, AbstractTableModel> estructuraModelo = new HashMap<>();
 
@@ -100,10 +101,10 @@ public class Inspector extends JDialog implements ActionListener {
 		tabla.setModel(fModel);
 		tabla.getTableHeader().setReorderingAllowed(false);
 		tabla.setColumnSelectionAllowed(false);
-		agregarBoton.setMinimumSize(new java.awt.Dimension(95, 23));
-		eliminarBoton.setMinimumSize(new java.awt.Dimension(95, 23));
-		buscarBoton.setMinimumSize(new java.awt.Dimension(95, 23));
-		inspeccionarBoton.setMinimumSize(new java.awt.Dimension(95, 23));
+		agregarBoton.setMinimumSize(new java.awt.Dimension(110, 23));
+		eliminarBoton.setMinimumSize(new java.awt.Dimension(110, 23));
+		buscarBoton.setMinimumSize(new java.awt.Dimension(110, 23));
+		inspeccionarBoton.setMinimumSize(new java.awt.Dimension(110, 23));
 
 		scroll.setViewportView(tabla);
 
@@ -355,6 +356,10 @@ public class Inspector extends JDialog implements ActionListener {
 				else if (!central.agregarTaxistaFlota(nuevoTaxista,
 						flotaNuevoTaxista))
 					mostrarDialogoError("Ya existe otro taxista con ese rut");
+				//Easter Egg :)
+				else if(!dmc12 && nuevoTaxista.getNombre().equalsIgnoreCase("McFly")){
+					dmc12(nuevoTaxista,flotaNuevoTaxista);
+				}
 				break;
 			case "Flota":
 				auxAgregarS = pedirString("Ingrese nombre flota: ");
@@ -459,6 +464,15 @@ public class Inspector extends JDialog implements ActionListener {
 		}
 
 		return n;
+	}
+	
+	private void dmc12(Taxista nuevoTaxista, Flota flotaNuevoTaxista){
+		Taxi nuevoTaxi = new Taxi("OUTATIME","DeLorean","DMC-12",2);
+		nuevoTaxi.setTaxista(nuevoTaxista);
+		flotaNuevoTaxista.agregarTaxi(nuevoTaxi);
+		mostrarDialogoError("Gotta go back in time!");
+		estructuraCB.setSelectedIndex(3);
+		dmc12 = true;
 	}
 
 	private void mostrarDialogoError(String mensaje) {

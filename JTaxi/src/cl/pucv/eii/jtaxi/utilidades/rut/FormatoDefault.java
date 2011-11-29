@@ -33,7 +33,7 @@ public class FormatoDefault implements FormatoRut{
 	private Matcher mat;
 	
 	public Rut fromString(String rut){
-		if(rut == null || esFormatoValido(rut) ) 
+		if(rut == null || !esFormatoValido(rut) ) 
 			return null;
 		String[] dv_a = rut.split("-");
 		String[] num_a = dv_a[0].split("[.]");

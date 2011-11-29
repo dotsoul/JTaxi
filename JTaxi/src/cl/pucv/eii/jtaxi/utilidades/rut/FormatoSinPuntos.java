@@ -30,7 +30,7 @@ public class FormatoSinPuntos implements FormatoRut{
 
 	@Override
 	public Rut fromString(String rut) {
-		if(rut == null || esFormatoValido(rut) ) 
+		if(rut == null || !esFormatoValido(rut) ) 
 			return null;
 		String[] dv_a = rut.split("-");
 		char dv = dv_a[1].charAt(0);
