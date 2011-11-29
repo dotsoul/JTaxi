@@ -46,14 +46,15 @@ public class Taxi {
     	recorrido = lista.listIterator();
     }
     
-    public void agregarPasajero(Pasajero p) throws CapacidadExcedidaException{
+    public boolean agregarPasajero(Pasajero p){
     	if (p == null)
     		throw new IllegalArgumentException("Pasajero no puede ser nulo.");
     	if (nPasajeros == pasajeros.length)
-    		throw new CapacidadExcedidaException("Ha excedido la capacidad de pasajeros del taxi.");
+    		return false;
     	
     	pasajeros[nPasajeros] = p;
     	nPasajeros++;
+    	return true;
     }
 
     public String siguienteParada(){
