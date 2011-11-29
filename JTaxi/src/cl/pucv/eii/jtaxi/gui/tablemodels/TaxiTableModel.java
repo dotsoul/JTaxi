@@ -25,12 +25,11 @@ import cl.pucv.eii.jtaxi.gui.ListaContadora;
 import cl.pucv.eii.jtaxi.modelo.Central;
 import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Paradero;
-import cl.pucv.eii.jtaxi.modelo.Pasajero;
-import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class TaxiTableModel extends AbstractTableModel {
 
 	private Lista<Taxi> lista;

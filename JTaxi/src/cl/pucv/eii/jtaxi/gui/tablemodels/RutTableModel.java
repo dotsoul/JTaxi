@@ -30,6 +30,7 @@ import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class RutTableModel extends AbstractTableModel {
 
 	private ListaDoble<Rut> lista;

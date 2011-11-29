@@ -26,6 +26,7 @@ import cl.pucv.eii.jtaxi.modelo.Flota;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class TaxistaTableModel extends AbstractTableModel {
 
 	private Central central;

@@ -28,9 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 import cl.pucv.eii.jtaxi.modelo.*;
-import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class JTaxi extends JFrame implements ActionListener{
 	
 	private Central central;
@@ -93,7 +93,6 @@ public class JTaxi extends JFrame implements ActionListener{
 	public void setCentral(Central c){
 		this.central = c;
 		initComponents();
-		crearDummies();
 		this.setVisible(true);
 	}
 	
@@ -112,27 +111,4 @@ public class JTaxi extends JFrame implements ActionListener{
 		
 	}
 	
-	public void crearDummies(){
-		central.agregarFlota(new cl.pucv.eii.jtaxi.modelo.Flota("René"));
-		central.agregarFlota(new cl.pucv.eii.jtaxi.modelo.Flota("José"));
-		central.buscarFlota("René").agregarTaxi(new cl.pucv.eii.jtaxi.modelo.Taxi("Patente","Marca","Modelo",1));
-		central.buscarFlotaTaxi("Patente").agregarTaxista(new cl.pucv.eii.jtaxi.modelo.Taxista("PEDRO",Rut.fromString("24.197.027-2"),20000));
-		central.buscarFlotaTaxi("Patente").setTaxistaTaxi(Rut.fromString("24.197.027-2"), "Patente");
-		Sector s1 = new Sector("ReneLandia");
-		Sector s2 = new Sector("JoseLandia");
-		Sector s3 = new Sector("Juliolandia");
-		Taxi t1 = new Taxi("Patente2", "Marca2","Modale",4);
-		central.agregarTaxiFlota(t1, "José");
-		Pasajero rene = new Pasajero("René", Rut.fromString("23.535.840-9"),2123123,"Calle rene 1");
-		central.agregarPasajeroTaxi(rene, "Patente2");
-		rutsTemporales.agregar(Rut.fromString("12.026.900-3"));
-		
-		for(int i = 0;i<10;i++)
-			s1.agregarParadero(new Paradero(Integer.toString(i), i+" street"));
-		System.out.println(Rut.generarDV(23535840));
-		central.agregarSector(s1);
-		central.agregarSector(s2);
-		central.agregarSector(s3);
-		
-	}
 }

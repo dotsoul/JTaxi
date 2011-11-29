@@ -53,6 +53,7 @@ import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class Inspector extends JDialog implements ActionListener {
 	private JButton agregarBoton = new JButton("Agregar");
 	private JButton buscarBoton = new JButton("Buscar");
@@ -214,7 +215,7 @@ public class Inspector extends JDialog implements ActionListener {
 								.addContainerGap(
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)));
-
+		inspeccionarBoton.setVisible(false);
 		pack();
 	}
 

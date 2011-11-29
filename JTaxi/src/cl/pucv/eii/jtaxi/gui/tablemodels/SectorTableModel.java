@@ -27,6 +27,7 @@ import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 
+@SuppressWarnings("serial")
 public class SectorTableModel extends AbstractTableModel {
 
 	private Lista<Sector> sectores;

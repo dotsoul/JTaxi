@@ -26,6 +26,7 @@ import cl.pucv.eii.jtaxi.modelo.Paradero;
 import cl.pucv.eii.jtaxi.modelo.Sector;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class ParaderoTableModel extends AbstractTableModel {
 
 	private Central central;

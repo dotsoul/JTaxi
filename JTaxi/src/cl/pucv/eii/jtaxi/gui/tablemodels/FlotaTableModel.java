@@ -29,6 +29,7 @@ import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.modelo.Taxista;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 
+@SuppressWarnings("serial")
 public class FlotaTableModel extends AbstractTableModel {
 
 	private Lista<Flota> flotas;

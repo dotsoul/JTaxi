@@ -19,6 +19,7 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
+@SuppressWarnings("serial")
 public class CapacidadExcedidaException extends RuntimeException {
 
 	public CapacidadExcedidaException() {super();}

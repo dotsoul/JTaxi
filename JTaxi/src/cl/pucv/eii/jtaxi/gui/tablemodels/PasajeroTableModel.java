@@ -27,6 +27,7 @@ import cl.pucv.eii.jtaxi.modelo.Pasajero;
 import cl.pucv.eii.jtaxi.modelo.Taxi;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 
+@SuppressWarnings("serial")
 public class PasajeroTableModel extends AbstractTableModel {
 
 	private ListaDoble<Pasajero> lista;
