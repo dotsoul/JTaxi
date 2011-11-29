@@ -60,6 +60,7 @@ public class Central implements Observable {
 		buscarSector(sector).agregarParadero(p);
 		notificarObservers("Paradero");
 		notificarObservers("Sector");
+		notificarObservers("Flota");
 		return true;
 	}
 

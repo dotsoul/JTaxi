@@ -53,6 +53,8 @@ public class JTaxi extends JFrame implements ActionListener{
 		tomarOrdenBoton.addActionListener(this);
 		manipularBoton.setActionCommand("manipular");
 		manipularBoton.addActionListener(this);
+		sueldoBoton.setActionCommand("sueldo");
+		sueldoBoton.addActionListener(this);
 		centralLabel.setText("Central: "+central.getNombre());
 		this.setTitle("JTaxi");
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,7 +121,11 @@ public class JTaxi extends JFrame implements ActionListener{
 	}
 
 	private void tomarOrden() {
+		int nPasajeros = pedirInt("Ingrese número de pasajeros.", 1);
 		
+		for(int i = 0; i<nPasajeros;i++){
+			
+		}
 	}
 	
 	private int pedirInt(String mensaje, int min) {
