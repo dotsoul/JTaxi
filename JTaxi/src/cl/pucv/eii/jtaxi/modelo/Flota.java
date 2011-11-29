@@ -46,6 +46,18 @@ public class Flota {
 		}
 		return false;
 	}
+	
+	public Taxi buscarTaxiCapacidad(int capacidad){
+		for(Taxi t: taxis)
+			if (t.getCapacidad() >= capacidad)
+				return t;
+		return null;
+	}
+	
+	public void vaciarTaxi(Taxi t){
+		if(t != null)
+			t.vaciar();
+	}
 
 	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
 		if (pasajero == null || patente == null || buscarTaxiPasajero(pasajero.getRut()) != null)

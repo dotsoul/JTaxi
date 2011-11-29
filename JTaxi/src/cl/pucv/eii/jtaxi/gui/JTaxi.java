@@ -33,8 +33,8 @@ import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
 
 @SuppressWarnings("serial")
-public class JTaxi extends JFrame implements ActionListener{
-	
+public class JTaxi extends JFrame implements ActionListener {
+
 	private Central central;
 	private JLabel centralLabel = new JLabel();
 	private JButton tomarOrdenBoton = new JButton("Tomar orden...");
@@ -42,74 +42,98 @@ public class JTaxi extends JFrame implements ActionListener{
 	private JButton manipularBoton = new JButton("Manipular Estructuras");
 	private JSeparator separador1 = new JSeparator();
 	private ListaDoble<Rut> rutsTemporales = new ListaDoble<>();
-	
-	public JTaxi(){
+
+	public JTaxi() {
 		this.setLocationRelativeTo(null);
 	}
-	
-	private void initComponents(){
-		
+
+	private void initComponents() {
+
 		tomarOrdenBoton.setActionCommand("tomarOrden");
 		tomarOrdenBoton.addActionListener(this);
 		manipularBoton.setActionCommand("manipular");
 		manipularBoton.addActionListener(this);
 		sueldoBoton.setActionCommand("sueldo");
 		sueldoBoton.addActionListener(this);
-		centralLabel.setText("Central: "+central.getNombre());
+		centralLabel.setText("Central: " + central.getNombre());
 		this.setTitle("JTaxi");
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(centralLabel)
-                .addContainerGap(96, Short.MAX_VALUE))
-            .addComponent(separador1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tomarOrdenBoton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(sueldoBoton, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(manipularBoton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(centralLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(separador1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tomarOrdenBoton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sueldoBoton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(manipularBoton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pack();
-        this.setResizable(false);
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
+				getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup().addContainerGap()
+								.addComponent(centralLabel)
+								.addContainerGap(96, Short.MAX_VALUE))
+				.addComponent(separador1, javax.swing.GroupLayout.DEFAULT_SIZE,
+						156, Short.MAX_VALUE)
+				.addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														tomarOrdenBoton,
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														136, Short.MAX_VALUE)
+												.addComponent(
+														sueldoBoton,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														136, Short.MAX_VALUE)
+												.addComponent(
+														manipularBoton,
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														136, Short.MAX_VALUE))
+								.addContainerGap()));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(centralLabel)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(separador1,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										2,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(18, 18, 18)
+								.addComponent(tomarOrdenBoton)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(sueldoBoton)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(manipularBoton)
+								.addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
+
+		pack();
+		this.setResizable(false);
 	}
-	
-	public void setCentral(Central c){
+
+	public void setCentral(Central c) {
 		this.central = c;
 		initComponents();
 		this.setVisible(true);
 	}
-	
-	private void mostrarInspector(){
+
+	private void mostrarInspector() {
 		Inspector ins = new Inspector(this, central, rutsTemporales);
 		ins.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		switch(evt.getActionCommand()){
+		switch (evt.getActionCommand()) {
 		case "manipular":
 			mostrarInspector();
 			break;
@@ -117,17 +141,34 @@ public class JTaxi extends JFrame implements ActionListener{
 			tomarOrden();
 			break;
 		}
-		
+
 	}
 
 	private void tomarOrden() {
 		int nPasajeros = pedirInt("Ingrese número de pasajeros.", 1);
-		
-		for(int i = 0; i<nPasajeros;i++){
-			
+		Taxi t = central.buscarTaxiCapacidad(nPasajeros);
+		if (t == null) {
+			mostrarDialogoError("Lo sentimos, no contamos con taxis con esa capacidad");
+		} else {
+			ListaDoble<Pasajero> pasajeros = new ListaDoble<>();
+			for (int i = 0; i < nPasajeros; i++) {
+				pasajeros.agregar(new Pasajero(pedirString("Ingrese nombre:"),
+						pedirRut("Ingrese rut:"), pedirInt("Ingrese teléfono:",
+								1),
+						pedirString("Ingrese dirección de destino: ")));
+			}
+			boolean agregados = true;
+			for(Pasajero p: pasajeros){
+				if(!central.agregarPasajeroTaxi(p, t.getPatente()))
+					agregados = false;
+			}
+			if(!agregados){
+				mostrarDialogoError("Uno o más pasajeros no pudo ser agregado porque ya existen en el sistema.");
+			}
 		}
+
 	}
-	
+
 	private int pedirInt(String mensaje, int min) {
 		String input;
 		int n = -1;
@@ -190,5 +231,5 @@ public class JTaxi extends JFrame implements ActionListener{
 
 		return null;
 	}
-	
+
 }

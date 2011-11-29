@@ -124,4 +124,8 @@ public class Taxi {
     	return false;
     }
     
+    public void vaciar(){
+    	nPasajeros = 0;
+    }
+    
 }

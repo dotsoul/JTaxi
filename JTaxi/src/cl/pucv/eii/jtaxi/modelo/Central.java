@@ -63,6 +63,15 @@ public class Central implements Observable {
 		notificarObservers("Flota");
 		return true;
 	}
+	
+	public Taxi buscarTaxiCapacidad(int capacidad){
+		for(Flota f: flotas){
+			Taxi t = f.buscarTaxiCapacidad(capacidad);
+			if(t != null)
+				return t;
+		}
+		return null;
+	}
 
 	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
 		if(pasajero == null || patente == null)
@@ -131,6 +140,7 @@ public class Central implements Observable {
 		if( flota.agregarTaxista(nuevo) ){
 			notificarObservers("Taxista");
 			notificarObservers("Flota");
+			return true;
 		}
 		
 		return false;
