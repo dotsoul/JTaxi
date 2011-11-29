@@ -18,7 +18,10 @@
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cl.pucv.eii.jtaxi.modelo;
-
+/**
+ * TODO Implementar Strategy en toString
+ *
+ */
 public class Dirección {
 
 	private String calle;
@@ -35,6 +38,11 @@ public class Dirección {
 	
 	public int getNumero(){
 		return numero;
+	}
+	
+	@Override
+	public String toString(){
+		return calle+ " "+numero;
 	}
 
 }

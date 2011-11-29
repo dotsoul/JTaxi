@@ -35,5 +35,6 @@ public class Taxista extends Persona {
     public void setSueldo(int sueldo) {
         this.sueldo = sueldo;
     }
+    
 
 }

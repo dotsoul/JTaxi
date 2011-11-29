@@ -29,14 +29,12 @@ import cl.pucv.eii.jtaxi.utilidades.listas.ListaSimple;
 public class Flota {
 
 	private String nombre;
-	private ListaSimple<Taxista> taxistas;
-	private ListaCircular<Paradero> paraderos;
-	private ListaDoble<Taxi> taxis;
+	private ListaSimple<Taxista> taxistas = new ListaSimple<>();
+	private ListaCircular<Paradero> paraderos = new ListaCircular<>();
+	private ListaDoble<Taxi> taxis = new ListaDoble<>();
 
 	public Flota(String nombre) {
 		this.nombre = nombre;
-		paraderos = new ListaCircular<>();
-		taxis = new ListaDoble<>();
 	}
 	
 	public String getNombre() {
@@ -141,6 +139,11 @@ public class Flota {
 		if (t!=null)
 			t.setSueldo(nuevoSueldo);
 		
+	}
+	
+	@Override
+	public String toString(){
+		return nombre;
 	}
 
 

@@ -21,8 +21,6 @@ package cl.pucv.eii.jtaxi.modelo;
 
 public class RutInvalidoException extends Exception {
 
-	private static final long serialVersionUID = -7777711331481407974L;
-
 	public RutInvalidoException() {super();}
 
 	public RutInvalidoException(String arg0) {

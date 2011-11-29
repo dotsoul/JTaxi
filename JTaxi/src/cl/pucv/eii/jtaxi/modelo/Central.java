@@ -51,9 +51,22 @@ public class Central {
      * @param rut
      * @return
      */
-    public Flota buscarFlota(Rut rut){
+    public Flota buscarFlotaTaxista(Rut rut){
     	for(Flota f: flotas){
     		if (f.buscarTaxista(rut) != null)
+    			return f;
+    	}
+    	return null;
+    }
+    
+    /**
+     * Retorna la flota que contiene al Taxi con patente p.
+     * @param rut
+     * @return
+     */
+    public Flota buscarFlotaTaxi(String p){
+    	for(Flota f: flotas){
+    		if (f.buscarTaxi(p) != null)
     			return f;
     	}
     	return null;
@@ -117,7 +130,7 @@ public class Central {
     }
 
     public boolean eliminarTaxista(Rut rut){
-    	Flota f = buscarFlota(rut);
+    	Flota f = buscarFlotaTaxista(rut);
     	if (f == null)
     		return false;
     	return f.eliminarTaxista(rut);
@@ -126,5 +139,10 @@ public class Central {
     public String getNombre(){
         return nombre;
     }
+    
+	@Override
+	public String toString() {
+		return nombre;
+	}
 
 }

@@ -21,6 +21,7 @@ package cl.pucv.eii.jtaxi.modelo;
 
 import java.util.ListIterator;
 
+import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaCircular;
 
 public class Taxi {
@@ -92,6 +93,15 @@ public class Taxi {
 
     public String getMarca(){
         return marca;
+    }
+    
+    public int getNPasajeros(){
+    	return nPasajeros;
+    }
+    
+    public void listarPasajeros(Lista<Pasajero> lista){
+    	for(int i = 1;i<=nPasajeros;i++)
+    		lista.agregar(pasajeros[i-1]);
     }
     
 }

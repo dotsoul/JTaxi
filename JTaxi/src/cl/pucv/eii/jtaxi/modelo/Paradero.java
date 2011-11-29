@@ -22,18 +22,13 @@ package cl.pucv.eii.jtaxi.modelo;
 public class Paradero {
 
     private String nombre;
-    private Sector sector;
     private Dirección direccion;
 
-    public Paradero(String n,Sector s,Dirección d){
+    public Paradero(String n, Dirección d){
         nombre = n;
-        sector = s;
         direccion = d;
     } 
     
-    public Sector getSector(){
-    	return sector;
-    }
 
     public String getNombre(){
         return nombre;

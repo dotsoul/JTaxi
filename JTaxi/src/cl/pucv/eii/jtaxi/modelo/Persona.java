@@ -36,5 +36,10 @@ public abstract class Persona {
     public Rut getRut() {
         return rut;
     }
+    
+    @Override
+    public String toString(){
+    	return nombre;
+    }
 
 }

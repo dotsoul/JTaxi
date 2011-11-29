@@ -30,11 +30,10 @@ import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
 public class Sector {
 
 	private String nombre;
-	private ListaDoble<Paradero> paraderos;
+	private ListaDoble<Paradero> paraderos = new ListaDoble<Paradero>();
 
 	public Sector(String nombre) {
 		this.nombre = nombre;
-		paraderos = new ListaDoble<Paradero>();
 	}
 
 	public String getNombre() {

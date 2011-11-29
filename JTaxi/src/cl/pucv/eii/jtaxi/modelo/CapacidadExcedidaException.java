@@ -20,7 +20,6 @@
 package cl.pucv.eii.jtaxi.modelo;
 
 public class CapacidadExcedidaException extends Exception {
-	private static final long serialVersionUID = 8648580181555755725L;
 
 	public CapacidadExcedidaException() {super();}
 	public CapacidadExcedidaException(String s) {
