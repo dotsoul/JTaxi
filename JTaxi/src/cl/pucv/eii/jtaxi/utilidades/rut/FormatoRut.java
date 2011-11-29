@@ -17,27 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cl.pucv.eii.jtaxi.modelo;
+package cl.pucv.eii.jtaxi.utilidades.rut;
 
-import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
-
-public class Pasajero extends Persona {
-
-    private String destino;
-    private int teléfono;
-
-    public Pasajero(String nombre, Rut rut, int teléfono, String destino){
-        super(nombre, rut);
-        this.destino = destino;
-        this.teléfono=teléfono;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public int getTelefono() {
-        return teléfono;
-    }
-    
+/**
+ * Implementación del patrón Strategy para darle formato a la interpretación en String
+ * de un objeto de tipo RUT.
+ */
+public interface FormatoRut {
+	public Rut fromString(String rut);
+	public String toString(Rut rut);
 }

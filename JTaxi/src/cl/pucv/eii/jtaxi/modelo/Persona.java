@@ -19,6 +19,8 @@
  */
 package cl.pucv.eii.jtaxi.modelo;
 
+import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
+
 public abstract class Persona {
 
     private String nombre;

@@ -23,6 +23,7 @@ import java.util.ListIterator;
 
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaCircular;
+import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
 
 public class Taxi {
 	

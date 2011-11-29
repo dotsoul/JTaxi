@@ -29,6 +29,7 @@ import javax.swing.JSeparator;
 
 import cl.pucv.eii.jtaxi.modelo.*;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
+import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
 
 @SuppressWarnings("serial")
 public class JTaxi extends JFrame implements ActionListener{

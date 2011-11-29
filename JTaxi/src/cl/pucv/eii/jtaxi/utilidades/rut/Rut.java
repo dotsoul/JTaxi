@@ -17,10 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with JTaxi.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cl.pucv.eii.jtaxi.modelo;
+package cl.pucv.eii.jtaxi.utilidades.rut;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
 
 /**
  * La clase Rut representa al Rol único tributario utilizado para identificar personas en Chile.
@@ -32,7 +31,7 @@ public class Rut {
 	private int rut;
 	private char dv;
 	private static final char[] digitosVerificadores = { '1', '2', '3', '4','5', '6', '7', '8', '9', '0', 'K' };
-	private static final Pattern PATRON_RUT = Pattern.compile("(^[1-9]|^[1-9][0-9])[.][0-9][0-9][0-9][.][0-9][0-9][0-9]-[[0-9]|[K|k]]");
+	private FormatoRut formato;
 	
 	public Rut(int rut, char dv) throws RutInvalidoException {
 		char dv_m = Character.toUpperCase(dv);
@@ -42,9 +41,13 @@ public class Rut {
 			throw new RutInvalidoException("Rut debe estar estar en el intervalo [1.000.000,72.000.000[");
 		if (generarDV(rut) != dv)
 			throw new RutInvalidoException("El RUT ingresado no coincide con su digito verificador.");
-	
 		this.rut = rut;
 		this.dv = dv_m;
+		formato = new FormatoDefault();
+	}
+	
+	public void setFormato(FormatoRut formato){
+		this.formato = formato;
 	}
 
 	public long getNumero() {
@@ -54,23 +57,29 @@ public class Rut {
 	public char getDV() {
 		return dv;
 	}
-
+	
 	@Override
-	public String toString() {
-		String conFormato = "";
-
-		char[] arrRut = Long.toString(rut).toCharArray();
-
-		int aux = 3 - (arrRut.length % 3);
-		for (char c : arrRut) {
-			conFormato += (((aux % 3) == 0)) ? "." + c : c;
-			aux++;
-		}
-		conFormato += "-" + dv;
-		return conFormato;
+	public String toString(){
+		return formato.toString(this);
+	}
+	
+	public String toString(FormatoRut formato){
+		return formato.toString(this);
+	}
+	
+	public static Rut fromString(String rut){
+		return new FormatoDefault().fromString(rut);
+	}
+	
+	public static Rut fromString(String rut, FormatoRut formato){
+		return formato.fromString(rut);
 	}
 
-
+	/**
+	 * Genera un digito verificador valido para el rut recibido por parametro.
+	 * @param entero entre 1.000.000 y 72.000.000
+	 * @return char con el db generado para ese rut
+	 */
 	public static char generarDV(int rut) {
 		if (rut >= 72000000 || rut < 100000)
 			throw new IllegalArgumentException();
@@ -92,6 +101,11 @@ public class Rut {
 		return dv;
 	}
 
+	/**
+	 * Comprueba que el caracter recibido por parametro sea uno valido
+	 * @param dv digito verificador
+	 * @return true si el digito verificador toma un valor válido
+	 */
 	public static boolean dvEsValido(char dv) {
 		char dv_m = Character.toUpperCase(dv);
 		for (char d : digitosVerificadores)
@@ -100,35 +114,6 @@ public class Rut {
 		return false;
 	}
 	
-	public static Rut fromString(String rut){
-		if(rut == null ) return null;
-		if(!esFormatoValido(rut))
-			return null;
-		String[] dv_a = rut.split("-");
-		String[] num_a = dv_a[0].split("[.]");
-
-		char dv = dv_a[1].charAt(0);
-		StringBuilder sb = new StringBuilder();
-		for(String digito : num_a){
-			sb.append(digito);
-		}
-		
-		int rut_i = Integer.parseInt(sb.toString());
-		Rut rutDeString = null;
-		try {
-			rutDeString = new Rut(rut_i,dv);
-		} catch(RutInvalidoException e){
-			return null;
-		}
-		
-		return rutDeString;
-	}
-	
-	private static boolean esFormatoValido(String rut){
-		Matcher mat;
-		mat = PATRON_RUT.matcher(rut);
-		return mat.find();
-	}
 
 	@Override
 	public int hashCode() {

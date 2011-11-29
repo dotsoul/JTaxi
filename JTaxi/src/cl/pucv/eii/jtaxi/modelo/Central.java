@@ -25,6 +25,7 @@ import cl.pucv.eii.jtaxi.interfaces.Observable;
 import cl.pucv.eii.jtaxi.interfaces.Observer;
 import cl.pucv.eii.jtaxi.utilidades.listas.Lista;
 import cl.pucv.eii.jtaxi.utilidades.listas.ListaDoble;
+import cl.pucv.eii.jtaxi.utilidades.rut.Rut;
 
 public class Central implements Observable {
 
