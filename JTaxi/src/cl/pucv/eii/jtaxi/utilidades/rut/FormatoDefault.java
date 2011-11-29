@@ -23,14 +23,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
-
+/**
+ * 
+ * @author Julio
+ *
+ */
 public class FormatoDefault implements FormatoRut{
 	
 	private static final Pattern PATRON_RUT = Pattern.compile("(^[1-9]|^[1-9][0-9])[.][0-9][0-9][0-9][.][0-9][0-9][0-9]-[[0-9]|[K|k]]");
-
+	private Matcher mat;
+	
 	public Rut fromString(String rut){
-		if(rut == null ) return null;
-		if(!esFormatoValido(rut))
+		if(rut == null || esFormatoValido(rut) ) 
 			return null;
 		String[] dv_a = rut.split("-");
 		String[] num_a = dv_a[0].split("[.]");
@@ -52,8 +56,7 @@ public class FormatoDefault implements FormatoRut{
 		return rutDeString;
 	}
 	
-	private static boolean esFormatoValido(String rut){
-		Matcher mat;
+	private boolean esFormatoValido(String rut){
 		mat = PATRON_RUT.matcher(rut);
 		return mat.find();
 	}

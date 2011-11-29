@@ -27,7 +27,7 @@ import cl.pucv.eii.jtaxi.modelo.RutInvalidoException;
  * TODO Implementar patrón Strategy en toString() y fromString()
  *
  */
-public class Rut {
+public final class Rut {
 	private int rut;
 	private char dv;
 	private static final char[] digitosVerificadores = { '1', '2', '3', '4','5', '6', '7', '8', '9', '0', 'K' };
