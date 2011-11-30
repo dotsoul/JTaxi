@@ -136,8 +136,8 @@ public class JTaxi extends JFrame implements ActionListener {
 		switch (evt.getActionCommand()) {
 		case "sueldo":
 			int cash = -1;
-			String input = JOptionPane.showInputDialog(this, "Ingrese nombre de la flota de la cual desea \n" +
-					"obtener el presupuesto deje vacío para sacar el total del sistema",
+			String input = JOptionPane.showInputDialog(this, "Ingrese nombre de la flota de la cual desea obtener el" +
+					"										\n presupuesto deje vacío para sacar el total del sistema",
 					"Ingresar datos", JOptionPane.QUESTION_MESSAGE);
 			if(input != null && input.isEmpty()){
 				cash = central.getPresupuesto();
