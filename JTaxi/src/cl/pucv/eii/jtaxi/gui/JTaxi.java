@@ -135,9 +135,24 @@ public class JTaxi extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		switch (evt.getActionCommand()) {
 		case "sueldo":
-			int total = central.getPresupuesto();
-					JOptionPane.showMessageDialog(this, "Debe pagar a sus taxistas:\n"+total, "Sueldo total",
+			int cash = -1;
+			String input = JOptionPane.showInputDialog(this, "Ingrese nombre de la flota de la cual desea \n" +
+					"obtener el presupuesto deje vacío para sacar el total del sistema",
+					"Ingresar datos", JOptionPane.QUESTION_MESSAGE);
+			if(input == null){
+				cash = central.getPresupuesto();
+			} else {
+				Flota f = central.buscarFlota(input);
+				if(f == null)
+					mostrarDialogoError("No se encuentra la flota.");
+				else
+					cash = f.getPresupuesto();
+			}
+			
+			if(cash > -1)
+				JOptionPane.showMessageDialog(this, "Debe pagar a sus taxistas:\n"+cash, "Sueldo total",
 						JOptionPane.INFORMATION_MESSAGE);
+			
 			break;
 		case "manipular":
 			mostrarInspector();
@@ -169,6 +184,9 @@ public class JTaxi extends JFrame implements ActionListener {
 			}
 			if(!agregados){
 				mostrarDialogoError("Uno o más pasajeros no pudo ser agregado porque ya existen en el sistema.");
+			} else {
+				JOptionPane.showMessageDialog(this, "Todos los pasajeros fueron asignados al taxi con patente "+t.getPatente(), "Orden ingresada.",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 
