@@ -141,7 +141,7 @@ public class JTaxi extends JFrame implements ActionListener {
 					"Ingresar datos", JOptionPane.QUESTION_MESSAGE);
 			if(input != null && input.isEmpty()){
 				cash = central.getPresupuesto();
-			} else {
+			} else if (input != null) {
 				Flota f = central.buscarFlota(input);
 				if(f == null)
 					mostrarDialogoError("No se encuentra la flota.");
