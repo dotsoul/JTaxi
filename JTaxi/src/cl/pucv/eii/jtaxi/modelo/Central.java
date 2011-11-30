@@ -67,7 +67,7 @@ public class Central implements Observable {
 	public Taxi buscarTaxiCapacidad(int capacidad){
 		for(Flota f: flotas){
 			Taxi t = f.buscarTaxiCapacidad(capacidad);
-			if(t != null)
+			if(t != null && !t.estaOcupado())
 				return t;
 		}
 		return null;
@@ -144,6 +144,13 @@ public class Central implements Observable {
 		}
 		
 		return false;
+	}
+	
+	public int getPresupuesto(){
+		int suma = 0;
+		for(Flota f: flotas)
+			suma += f.getPresupuesto();
+		return suma;
 	}
 
 	public boolean agregarTaxistaTaxi(String patente, Rut rut) {

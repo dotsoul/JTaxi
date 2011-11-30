@@ -58,6 +58,13 @@ public class Flota {
 		if(t != null)
 			t.vaciar();
 	}
+	
+	public int getPresupuesto(){
+		int suma = 0;
+		for(Taxista t: taxistas)
+			suma += t.getSueldo();
+		return suma;
+	}
 
 	public boolean agregarPasajeroTaxi(Pasajero pasajero, String patente){
 		if (pasajero == null || patente == null || buscarTaxiPasajero(pasajero.getRut()) != null)

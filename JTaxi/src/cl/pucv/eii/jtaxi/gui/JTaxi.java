@@ -134,6 +134,11 @@ public class JTaxi extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		switch (evt.getActionCommand()) {
+		case "sueldo":
+			int total = central.getPresupuesto();
+					JOptionPane.showMessageDialog(this, "Debe pagar a sus taxistas:\n"+total, "Sueldo total",
+						JOptionPane.INFORMATION_MESSAGE);
+			break;
 		case "manipular":
 			mostrarInspector();
 			break;
@@ -148,11 +153,11 @@ public class JTaxi extends JFrame implements ActionListener {
 		int nPasajeros = pedirInt("Ingrese número de pasajeros.", 1);
 		Taxi t = central.buscarTaxiCapacidad(nPasajeros);
 		if (t == null) {
-			mostrarDialogoError("Lo sentimos, no contamos con taxis con esa capacidad");
+			mostrarDialogoError("Lo sentimos, no contamos con taxis con esa capacidad disponibles/libres.");
 		} else {
 			ListaDoble<Pasajero> pasajeros = new ListaDoble<>();
 			for (int i = 0; i < nPasajeros; i++) {
-				pasajeros.agregar(new Pasajero(pedirString("Ingrese nombre:"),
+				pasajeros.agregar(new Pasajero(pedirString("Ingrese nombre de pasajero nº"+i+":"),
 						pedirRut("Ingrese rut:"), pedirInt("Ingrese teléfono:",
 								1),
 						pedirString("Ingrese dirección de destino: ")));
