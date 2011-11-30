@@ -87,16 +87,16 @@ public class Inspector extends JDialog implements ActionListener {
 		String[] aux = new String[] { "Sector", "Paradero", "Flota", "Taxi",
 				"Taxista", "Pasajero", "Rut" };
 		estructuraCB.setModel(new DefaultComboBoxModel<String>(aux));
-		
+
 		setEstructuraModelo(aux);
-		
+
 		estructuraCB.setSelectedIndex(2);
 		estructuraCB.setActionCommand("cambioEstructura");
 		estructuraCB.addActionListener(this);
 
 		ListaDoble<Flota> flotas = new ListaDoble<>();
 		central.listarFlotas(flotas);
-		FlotaTableModel fModel = new FlotaTableModel(central,central);
+		FlotaTableModel fModel = new FlotaTableModel(central, central);
 
 		tabla.setModel(fModel);
 		tabla.getTableHeader().setReorderingAllowed(false);
@@ -225,17 +225,17 @@ public class Inspector extends JDialog implements ActionListener {
 	}
 
 	private void setEstructuraModelo(String[] estructuras) {
-		//{ "Sector", "Paradero", "Flota", "Taxi","Taxista", "Pasajero", "Rut" };
+		// { "Sector", "Paradero", "Flota", "Taxi","Taxista", "Pasajero", "Rut"
+		// };
 		AbstractTableModel[] modelos = new AbstractTableModel[] {
 				new SectorTableModel(central, central),
 				new ParaderoTableModel(central, central),
-				new FlotaTableModel(central,central),
+				new FlotaTableModel(central, central),
 				new TaxiTableModel(central, central),
 				new TaxistaTableModel(central, central),
 				new PasajeroTableModel(central, central),
-				new RutTableModel(central, central, rutsTemporales)
-				};
-		for(int i = 0;i<estructuras.length;i++){
+				new RutTableModel(central, central, rutsTemporales) };
+		for (int i = 0; i < estructuras.length; i++) {
 			estructuraModelo.put(estructuras[i], modelos[i]);
 		}
 	}
@@ -245,7 +245,8 @@ public class Inspector extends JDialog implements ActionListener {
 
 		switch (evt.getActionCommand()) {
 		case "cambioEstructura":
-			tabla.setModel(estructuraModelo.get(estructuraCB.getSelectedItem().toString()));
+			tabla.setModel(estructuraModelo.get(estructuraCB.getSelectedItem()
+					.toString()));
 			tabla.updateUI();
 			break;
 
@@ -356,9 +357,10 @@ public class Inspector extends JDialog implements ActionListener {
 				else if (!central.agregarTaxistaFlota(nuevoTaxista,
 						flotaNuevoTaxista))
 					mostrarDialogoError("Ya existe otro taxista con ese rut");
-				//Easter Egg :)
-				else if(!dmc12 && nuevoTaxista.getNombre().equalsIgnoreCase("McFly")){
-					dmc12(nuevoTaxista,flotaNuevoTaxista);
+				// Easter Egg :)
+				else if (!dmc12
+						&& nuevoTaxista.getNombre().equalsIgnoreCase("McFly")) {
+					dmc12(nuevoTaxista, flotaNuevoTaxista);
 				}
 				break;
 			case "Flota":
@@ -385,6 +387,7 @@ public class Inspector extends JDialog implements ActionListener {
 				else if (!central.agregarTaxiFlota(nuevoTaxi, flotaNuevoTaxi)) {
 					mostrarDialogoError("Ya existe otro taxi con esa patente.");
 				}
+
 				break;
 			case "Pasajero":
 				Pasajero nuevoPasajero = new Pasajero(
@@ -465,9 +468,9 @@ public class Inspector extends JDialog implements ActionListener {
 
 		return n;
 	}
-	
-	private void dmc12(Taxista nuevoTaxista, Flota flotaNuevoTaxista){
-		Taxi nuevoTaxi = new Taxi("OUTATIME","DeLorean","DMC-12",2);
+
+	private void dmc12(Taxista nuevoTaxista, Flota flotaNuevoTaxista) {
+		Taxi nuevoTaxi = new Taxi("OUTATIME", "DeLorean", "DMC-12", 2);
 		nuevoTaxi.setTaxista(nuevoTaxista);
 		flotaNuevoTaxista.agregarTaxi(nuevoTaxi);
 		mostrarDialogoError("Gotta go back in time!");
@@ -510,7 +513,8 @@ public class Inspector extends JDialog implements ActionListener {
 			if (r != null)
 				return r;
 			else
-				mostrarDialogoError("Ha ingresado un rut no válido o con un formato distinto a: X.XXX.XXX-X o: XX.XXX.XXX-X.");
+				mostrarDialogoError("Ha ingresado un rut no válido o con un\n"
+						+ "formato distinto a: X.XXX.XXX-X o: XX.XXX.XXX-X.");
 		}
 
 		return null;
