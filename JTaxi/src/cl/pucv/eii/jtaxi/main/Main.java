@@ -58,14 +58,14 @@ public class Main {
 			public void run() {
 				
 				String input = null;
-				JTaxi jtaxi = new JTaxi();
-				boolean valido = false;
+				JTaxi jtaxi = new JTaxi();//Creando el JFrame
+				boolean valido = false; //Necesitamos sí o sí una central
 				while(!valido){
 					input = JOptionPane.showInputDialog(jtaxi, "Ingrese nombre de la central:",
 							"Crear central", JOptionPane.QUESTION_MESSAGE);
 					if (input != null) {
 						if (input.trim().length() > 0
-								&& !input.matches("[\u00A0]+")) {
+								&& !input.matches("[\u00A0]+")) { //Nada de caracteres vacios
 							valido = true;
 						} else {
 							JOptionPane.showMessageDialog(jtaxi,
@@ -80,7 +80,7 @@ public class Main {
 					}
 				}
 
-				jtaxi.setCentral(new Central(input));
+				jtaxi.setCentral(new Central(input)); //Le entregamos la central al frame.
 
 			}
 		});

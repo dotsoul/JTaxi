@@ -353,6 +353,7 @@ public class Central implements Observable {
 		return nombre;
 	}
 
+	/*Patrón Observer - Interfaz Observable*/
 	@Override
 	public void agregarObserver(Observer o) {
 		if(!observers.contains(o))
